@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FAST NU – Transport Routes Fall 2025</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap');
+
+  :root {
+    --bg: #0a0a0f;
+    --surface: #111118;
+    --card: #16161f;
+    --border: #1e1e2e;
+    --accent: #00c8ff;
+    --accent2: #0066ff;
+    --green: #00ff88;
+    --red: #ff3355;
+    --text: #e8e8f0;
+    --muted: #6b6b85;
+    --gold: #ffd700;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ─── HEADER ─── */
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(10,10,15,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .logo-badge {
+    width: 40px; height: 40px;
+    background: linear-gradient(135deg, var(--accent2), var(--accent));
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 20px;
+    letter-spacing: 1px;
+    color: #fff;
+    flex-shrink: 0;
+  }
+
+  .logo-badge img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  .logo-text { line-height: 1.1; }
+  .logo-text strong { font-size: 15px; font-weight: 700; letter-spacing: 0.5px; }
+  .logo-text span { font-size: 11px; color: var(--muted); display: block; }
+
+  .header-time {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: var(--accent);
+    background: rgba(0,200,255,0.08);
+    border: 1px solid rgba(0,200,255,0.2);
+    padding: 4px 12px;
+    border-radius: 4px;
+  }
+
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .live-dot {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 12px; color: var(--green);
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .live-dot::before {
+    content: '';
+    width: 7px; height: 7px;
+    background: var(--green);
+    border-radius: 50%;
+    display: block;
+    animation: pulse 1.4s infinite;
+  }
+  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(0.8)} }
+
+  /* ─── HERO ─── */
+  .hero {
+    position: relative;
+    padding: 5rem 2rem 4rem;
+    text-align: center;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 50% at 50% 0%, rgba(0,102,255,0.18) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 40% at 80% 80%, rgba(0,200,255,0.08) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  .hero-eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1.2rem;
+    display: flex; align-items: center; justify-content: center; gap: 12px;
+  }
+  .hero-eyebrow::before, .hero-eyebrow::after {
+    content: '';
+    width: 40px; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--accent));
+  }
+  .hero-eyebrow::after { transform: scaleX(-1); }
+
+  .hero h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(3.5rem, 10vw, 8rem);
+    letter-spacing: 4px;
+    line-height: 0.9;
+    background: linear-gradient(135deg, #fff 0%, var(--accent) 50%, var(--accent2) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 0.4rem;
+  }
+
+  .hero-sub {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(1.2rem, 4vw, 2.2rem);
+    letter-spacing: 6px;
+    color: var(--muted);
+    margin-bottom: 2rem;
+  }
+
+  .hero-stats {
+    display: flex;
+    justify-content: center;
+    gap: 2.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 3rem;
+  }
+
+  .stat {
+    text-align: center;
+  }
+  .stat-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.8rem;
+    color: var(--accent);
+    line-height: 1;
+  }
+  .stat-label {
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* ─── SEARCH / FILTER ─── */
+  .controls {
+    max-width: 900px;
+    margin: 0 auto 3rem;
+    padding: 0 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .search-wrap {
+    position: relative;
+  }
+
+  .search-icon {
+    position: absolute;
+    left: 16px; top: 50%;
+    transform: translateY(-50%);
+    color: var(--muted);
+    pointer-events: none;
+    font-size: 16px;
+  }
+
+  #search {
+    width: 100%;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    padding: 14px 16px 14px 46px;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  #search::placeholder { color: var(--muted); }
+  #search:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(0,200,255,0.1);
+  }
+
+  .filters {
+    display: flex;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+  }
+
+  .filter-btn {
+    padding: 7px 16px;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    background: var(--card);
+    color: var(--muted);
+    font-size: 13px;
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+    transition: all 0.18s;
+    font-weight: 500;
+  }
+  .filter-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .filter-btn.active {
+    background: rgba(0,200,255,0.12);
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  /* ─── SECTION HEADER ─── */
+  .section-header {
+    max-width: 1400px;
+    margin: 0 auto 1.5rem;
+    padding: 0 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .section-label {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.6rem;
+    letter-spacing: 3px;
+    color: var(--text);
+  }
+
+  .section-line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, var(--border), transparent);
+  }
+
+  .section-count {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  /* ─── GRID ─── */
+  .routes-grid {
+    max-width: 1400px;
+    margin: 0 auto 5rem;
+    padding: 0 1.5rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1rem;
+  }
+
+  /* ─── ROUTE CARD ─── */
+  .route-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+    cursor: pointer;
+  }
+  .route-card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(0,200,255,0.35);
+    box-shadow: 0 8px 30px rgba(0,200,255,0.08);
+  }
+
+  .card-header {
+    padding: 14px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--border);
+    background: linear-gradient(135deg, rgba(0,102,255,0.07), rgba(0,200,255,0.04));
+  }
+
+  .card-header-left { display: flex; align-items: center; gap: 10px; }
+
+  .route-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.1rem;
+    letter-spacing: 2px;
+    color: var(--accent);
+    background: rgba(0,200,255,0.1);
+    border: 1px solid rgba(0,200,255,0.2);
+    padding: 2px 10px;
+    border-radius: 4px;
+    white-space: nowrap;
+  }
+
+  .driver-name {
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--text);
+  }
+
+  .driver-phone {
+    font-size: 11px;
+    color: var(--muted);
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .card-badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--green);
+    background: rgba(0,255,136,0.08);
+    border: 1px solid rgba(0,255,136,0.2);
+    padding: 2px 8px;
+    border-radius: 4px;
+    white-space: nowrap;
+  }
+
+  .stops-list {
+    padding: 12px 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+  }
+
+  .route-card.expanded .stops-list {
+    max-height: 800px;
+  }
+
+  .stop-row {
+    display: flex;
+    align-items: center;
+    padding: 7px 16px;
+    gap: 12px;
+    transition: background 0.15s;
+  }
+  .stop-row:hover { background: rgba(255,255,255,0.03); }
+
+  .stop-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--border);
+    flex-shrink: 0;
+    position: relative;
+  }
+  .stop-row:first-child .stop-dot { background: var(--green); }
+
+  .stop-connector {
+    position: absolute;
+    left: 2px; top: 6px;
+    width: 1px; height: 20px;
+    background: var(--border);
+  }
+
+  .stop-name {
+    font-size: 13px;
+    color: var(--text);
+    flex: 1;
+  }
+
+  .stop-time {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    background: rgba(0,200,255,0.07);
+    padding: 2px 8px;
+    border-radius: 4px;
+  }
+
+  .fast-row {
+    border-top: 1px solid var(--border);
+    margin-top: 6px;
+    padding-top: 6px;
+  }
+  .fast-row .stop-dot { background: var(--gold); box-shadow: 0 0 6px var(--gold); }
+  .fast-row .stop-name { color: var(--gold); font-weight: 600; }
+  .fast-row .stop-time { color: var(--gold); background: rgba(255,215,0,0.1); border: 1px solid rgba(255,215,0,0.2); }
+
+  .card-toggle {
+    width: 100%;
+    padding: 10px;
+    background: transparent;
+    border: none;
+    border-top: 1px solid var(--border);
+    color: var(--muted);
+    font-size: 12px;
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+    transition: color 0.18s, background 0.18s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+  }
+  .card-toggle:hover { background: rgba(255,255,255,0.03); color: var(--accent); }
+  .card-toggle .arrow { transition: transform 0.3s; }
+  .route-card.expanded .card-toggle .arrow { transform: rotate(180deg); }
+
+  /* ─── NO RESULTS ─── */
+  .no-results {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 5rem 1rem;
+    color: var(--muted);
+    display: none;
+  }
+  .no-results.visible { display: block; }
+  .no-results h3 { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; letter-spacing: 3px; margin-bottom: 0.5rem; }
+
+  /* ─── FOOTER ─── */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 2rem;
+    text-align: center;
+    color: var(--muted);
+    font-size: 12px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  footer span { color: var(--accent); }
+
+  /* ─── HIDDEN ─── */
+  .route-card.hidden { display: none; }
+
+  /* ─── SCROLLBAR ─── */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--muted); }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 600px) {
+    .hero { padding: 3rem 1rem 2.5rem; }
+    .hero-stats { gap: 1.5rem; }
+    .header-time { display: none; }
+    .routes-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="logo">
+    <div class="logo-badge"><img src="data:image/png;base64,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" alt="FAST NU Logo"></div>
+    <div class="logo-text">
+      <strong>FAST NU Karachi</strong>
+      <span>Transport Management | 25K-Somil</span>
+    </div>
+  </div>
+  <div class="header-time" id="clock">--:-- --</div>
+  <div class="header-right">
+    <div class="live-dot">FALL 2026</div>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-eyebrow">National University of Computer & Emerging Sciences</div>
+  <h1>TRANSPORT<br>ROUTES</h1>
+  <div class="hero-sub">Fall 2026 &nbsp;·&nbsp; Karachi Campus</div>
+  <div class="hero-stats">
+    <div class="stat">
+      <div class="stat-num" id="totalRoutes">0</div>
+      <div class="stat-label">Total Routes</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">7:45</div>
+      <div class="stat-label">Arrival Time</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num" id="totalDrivers">0</div>
+      <div class="stat-label">Drivers</div>
+    </div>
+  </div>
+</section>
+
+<!-- SEARCH & FILTER -->
+<div class="controls">
+  <div class="search-wrap">
+    <span class="search-icon">⌕</span>
+    <input type="text" id="search" placeholder="Search by area, driver, or route number…">
+  </div>
+  <div class="filters">
+    <button class="filter-btn active" data-filter="all">All Routes</button>
+    <button class="filter-btn" data-filter="nadeem">Nadeem Routes</button>
+    <button class="filter-btn" data-filter="jadoon">Jadoon Routes</button>
+  </div>
+</div>
+
+<!-- NADEEM SECTION -->
+<div class="section-header" id="nadeem-header">
+  <div class="section-label">Nadeem Routes</div>
+  <div class="section-line"></div>
+  <div class="section-count" id="nadeem-count"></div>
+</div>
+
+<div class="routes-grid" id="nadeem-grid"></div>
+
+<!-- JADOON SECTION -->
+<div class="section-header" id="jadoon-header">
+  <div class="section-label">Jadoon Routes</div>
+  <div class="section-line"></div>
+  <div class="section-count" id="jadoon-count"></div>
+</div>
+
+<div class="routes-grid" id="jadoon-grid">
+  <div class="no-results" id="no-results">
+    <h3>No Routes Found</h3>
+    <p>Try a different search term</p>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <span>FAST NU Karachi</span> &nbsp;·&nbsp; Transport Department &nbsp;·&nbsp; 25K-Somil &nbsp;·&nbsp; Fall 2026 &nbsp;·&nbsp; All departure times are AM
+</footer>
+
+<script>
+// ─── CLOCK ───
+function updateClock() {
+  const now = new Date();
+  document.getElementById('clock').textContent = now.toLocaleTimeString('en-US', {hour:'2-digit', minute:'2-digit', second:'2-digit'});
+}
+setInterval(updateClock, 1000); updateClock();
+
+// ─── DATA ───
+// Convert Excel decimal time to readable string
+function excelTimeToStr(d) {
+  const totalMin = Math.round(d * 24 * 60);
+  const h = Math.floor(totalMin / 60);
+  const m = totalMin % 60;
+  const suffix = h >= 12 ? 'PM' : 'AM';
+  const h12 = h % 12 || 12;
+  return `${h12}:${m.toString().padStart(2,'0')} ${suffix}`;
+}
+
+const NADEEM = [
+  { route: "1", driver: "ASAD", phone: "0314-2308675", stops: [
+    {name:"Malir Cantt Askari-V", time:"6:55 AM"}, {name:"FAST NU", time:"7:45 AM", arrival:true}
+  ]},
+  { route: "1-B", driver: "NAVEED", phone: "0312-2874142", stops: [
+    {name:"Malir Cantt Phase-I", time:"6:45 AM"}, {name:"Sector - G", time:"6:46 AM"}, {name:"Sector - J", time:"6:51 AM"},
+    {name:"Falcon", time:"6:56 AM"}, {name:"CMH", time:"6:57 AM"}, {name:"Cantt. Bazaar", time:"7:02 AM"},
+    {name:"Tank Chowk", time:"7:05 AM"}, {name:"Tariq Bin Zaid Society", time:"7:07 AM"},
+    {name:"Security Printing Press", time:"7:08 AM"}, {name:"FAST NU", time:"7:45 AM", arrival:true}
+  ]},
+  { route: "11", driver: "JAHANZEB", phone: "0321-2618936", stops: [
+    {name:"Soldier Bazar", time:"6:40 AM"}, {name:"Guro Mandir", time:"6:43 AM"},
+    {name:"Islamiaya College", time:"6:45 AM"}, {name:"Stadium Road", time:"6:55 AM"},
+    {name:"FAST NU", time:"7:45 AM", arrival:true}
+  ]},
+  { route: "12", driver: "HASSAN", phone: "0312-1042053", stops: [
+    {name:"Khudadad Colony", time:"6:52 AM"}, {name:"Kashmir Road", time:"6:54 AM"},
+    {name:"Sir Syed Road", time:"6:57 AM"}, {name:"Khalid Bin Waleed Road", time:"6:59 AM"},
+    {name:"Tariq Road", time:"7:01 AM"}, {name:"Tipu Sultan Road", time:"7:08 AM"},
+    {name:"FAST NU", time:"7:45 AM", arrival:true}
+  ]},
+  { route: "13", driver: "IMTIAZ", phone: "0300-6390409", stops: [
+    {name:"Esa Nagri", time:"6:57 AM"}, {name:"Mashriq Centre", time:"6:59 AM"},
+    {name:"Stadium", time:"7:00 AM"}, {name:"Dalmia", time:"7:03 AM"},
+    {name:"Millennium", time:"7:05 AM"}, {name:"Malir 15", time:"7:25 AM"},
+    {name:"FAST NU", time:"7:45 AM", arrival:true}
+  ]},
+  { route: "14", driver: "ADNAN", phone: "0343-2612271", stops: [
+    {name:"Old Sabzi Mandi", time:"6:45 AM"}, {name:"Sharfabad", time:"6:48 AM"},
+    {name:"Bahadurabad", time:"6:50 AM"}, {name:"Ragoon Wala Hall", time:"6:55 AM"},
+    {name:"Karsaz Pankha Stop", time:"7:00 AM"}, {name:"FAST NU", time:"7:45 AM", arrival:true}
+  ]},
+  { route: "15", driver: "JAHANZAIB", phone: "0315-8781932", stops: [
+    {name:"Forum Shopping Mall", time:"6:35 AM"}, {name:"ZamZama", time:"6:40 AM"},
+    {name:"Gizri", time:"6:50 AM"}, {name:"Phase – IV", time:"7:00 AM"},
+    {name:"Sunset Club", time:"7:02 AM"}, {name:"KFC Phase – II", time:"7:05 AM"},
+    {name:"FAST NU", time:"7:45 AM", arrival:true}
+  ]},
+  { route: "16", driver: "SHAHZAD IQBAL", phone: "0312-3311482", stops: [
+    {name:"Hyper Star", time:"6:35 AM"}, {name:"Kh. Mujahid", time:"6:40 AM"},
+    {name:"Saba Avenue", time:"6:45 AM"}, {name:"Kh. Bukhari", time:"6:50 AM"},
+    {name:"Kh. Ittehad", time:"6:55 AM"}, {name:"FAST NU", time:"7:45 AM", arrival:true}
+  ]},
+  { route: "19", driver: "MOLA BAKHSH", phone: "0315-8339958", stops: [
+    {name:"Hassan Square", time:"6:50 AM"}, {name:"Mumtaz Manzil", time:"6:52 AM"},
+    {name:"Bait-Ul-Mukarram", time:"6:55 AM"}, {name:"Urdu Science College", time:"6:57 AM"},
+    {name:"Aziz Bhatti Park", time:"7:00 AM"}, {name:"FAST NU", time:"7:45 AM", arrival:true}
+  ]},
+  { route: "21", driver: "ABID", phone: "0311-2010700", stops: [
+    {name:"Tower", time:"6:45 AM"}, {name:"Jang Press", time:"6:48 AM"},
+    {name:"Sindh Secretariat", time:"6:50 AM"}, {name:"Attrium Mall", time:"6:53 AM"},
+    {name:"Lucky Star", time:"6:55 AM"}, {name:"FTC", time:"6:58 AM"},
+    {name:"Shahrah-e-Faisal Nursery", time:"7:00 AM"}, {name:"FAST NU", time:"7:45 AM", arrival:true}
+  ]},
+  { route: "28", driver: "KHURRAM", phone: "0311-9287123", stops: [
+    {name:"FTC", time:"6:55 AM"}, {name:"Sindhi Muslim Soc", time:"6:57 AM"},
+    {name:"Allah Wala Chorangi", time:"6:59 AM"}, {name:"Nursery", time:"7:02 AM"},
+    {name:"Lal Kothi", time:"7:04 AM"}, {name:"Awami Markaz", time:"7:08 AM"},
+    {name:"NHS – IV", time:"7:10 AM"}, {name:"FAST NU", time:"7:45 AM", arrival:true}
+  ]},
+  { route: "29", driver: "ABID", phone: "0310-1219500", stops: [
+    {name:"X-20 Malir Cantt.", time:"7:10 AM"}, {name:"Cantt. Bazar", time:"7:12 AM"},
+    {name:"CP – 02", time:"7:15 AM"}, {name:"Qazimabad No. 4", time:"7:20 AM"},
+    {name:"FAST NU", time:"7:45 AM", arrival:true}
+  ]},
+  { route: "30", driver: "FAREED", phone: "0312-1220309", stops: [
+    {name:"Jahangirabad", time:"6:45 AM"}, {name:"Golimar Chowrangi", time:"6:46 AM"},
+    {name:"Urdu Bazar Nazimabad", time:"6:49 AM"}, {name:"Inquiry Office", time:"6:50 AM"},
+    {name:"Naz Petrol Pump", time:"6:51 AM"}, {name:"Sona Chandi Lawn", time:"6:52 AM"},
+    {name:"Liaquatabad Erum Bakery", time:"6:53 AM"}, {name:"FAST NU", time:"7:45 AM", arrival:true}
+  ]},
+  { route: "31", driver: "WAJID", phone: "0320-9204914", stops: [
+    {name:"KPT Bridge", time:"6:50 AM"}, {name:"Iqra University", time:"6:52 AM"},
+    {name:"Manzoor Colony", time:"6:55 AM"}, {name:"PAF Chapter", time:"7:00 AM"},
+    {name:"FAST NU", time:"7:45 AM", arrival:true}
+  ]},
+  { route: "32", driver: "SAMEER", phone: "0317-1037568", stops: [
+    {name:"Tyre Company", time:"6:30 AM"}, {name:"Boat Basin", time:"6:33 AM"},
+    {name:"Bilawal Chowrangi", time:"6:35 AM"}, {name:"26 Street", time:"6:40 AM"},
+    {name:"Badar Commercial", time:"6:45 AM"}, {name:"Khayaban-e-Sehar", time:"6:50 AM"},
+    {name:"Nexer College", time:"6:52 AM"}, {name:"Khayaban-e-Shahbaz", time:"6:55 AM"},
+    {name:"FAST NU", time:"7:45 AM", arrival:true}
+  ]},
+  { route: "33", driver: "SHAHBAZ", phone: "0313-1085542", stops: [
+    {name:"Liaquat 10. No.", time:"6:50 AM"}, {name:"Usman Memorial", time:"6:53 AM"},
+    {name:"Saylani Chowk", time:"7:00 AM"}, {name:"Zubaida Hospital", time:"7:03 AM"},
+    {name:"M. Ali Society", time:"7:05 AM"}, {name:"FAST NU", time:"7:45 AM", arrival:true}
+  ]},
+  { route: "34", driver: "SAAD JAVED", phone: "0314-2145992", stops: [
+    {name:"Korangi Crossing", time:"7:10 AM"}, {name:"Nasir Jump", time:"7:12 AM"},
+    {name:"Korangi No. 2", time:"7:15 AM"}, {name:"Korangi No. 5", time:"7:19 AM"},
+    {name:"Landhi No. 4", time:"7:25 AM"}, {name:"Landhi 89", time:"7:27 AM"},
+    {name:"FAST NU", time:"7:45 AM", arrival:true}
+  ]},
+  { route: "35", driver: "AFAQ BHAI", phone: "0315-2476345", stops: [
+    {name:"Teen Talwar", time:"6:50 AM"}, {name:"Race Course", time:"6:51 AM"},
+    {name:"Cant Station", time:"6:53 AM"}, {name:"Askari – II & III", time:"6:55 AM"},
+    {name:"NMC", time:"6:58 AM"}, {name:"FAST NU", time:"7:45 AM", arrival:true}
+  ]},
+  { route: "36", driver: "SHAKIR", phone: "0308-3386922", stops: [
+    {name:"Police Head Quarter Garden", time:"6:35 AM"}, {name:"Uncle Sariya", time:"6:37 AM"},
+    {name:"Mobile Market", time:"6:40 AM"}, {name:"Naz Plaza", time:"6:42 AM"},
+    {name:"Numaish", time:"6:45 AM"}, {name:"Islamia College", time:"6:50 AM"},
+    {name:"New Town Chandni Chowk", time:"6:53 AM"}, {name:"FAST NU", time:"7:45 AM", arrival:true}
+  ]},
+  { route: "37", driver: "IMTIAZ BALOCH", phone: "0323-2910386", stops: [
+    {name:"Ram Sawami", time:"6:40 AM"}, {name:"Garden Zoo", time:"6:42 AM"},
+    {name:"Ali Bhai", time:"6:45 AM"}, {name:"Khudadad Colony", time:"6:55 AM"},
+    {name:"Noorani Kabab", time:"6:57 AM"}, {name:"FAST NU", time:"7:45 AM", arrival:true}
+  ]},
+  { route: "37-B", driver: "KHALID", phone: "0311-2551794", stops: [
+    {name:"Garden Jamat Khan", time:"6:45 AM"}, {name:"Fatmi Blood Bank", time:"6:47 AM"},
+    {name:"Khurasan", time:"6:48 AM"}, {name:"Numaish", time:"6:52 AM"},
+    {name:"FAST NU", time:"7:45 AM", arrival:true}
+  ]},
+  { route: "38", driver: "FAISAL", phone: "0331-3147764", stops: [
+    {name:"Bacha Party", time:"6:50 AM"}, {name:"Punjab Chowrangi PSO Pump", time:"6:52 AM"},
+    {name:"Chandio Village", time:"6:53 AM"}, {name:"Altamash", time:"6:55 AM"},
+    {name:"Nadra Mega Center Phase – I", time:"7:00 AM"}, {name:"FAST NU", time:"7:45 AM", arrival:true}
+  ]},
+  { route: "39", driver: "SOHAIL", phone: "0326-2028524", stops: [
+    {name:"Perfume Chowk Johar", time:"6:52 AM"}, {name:"Hilltop", time:"6:53 AM"},
+    {name:"Johar More", time:"6:55 AM"}, {name:"Drig Road", time:"6:57 AM"},
+    {name:"Colony Gate", time:"6:59 AM"}, {name:"Star Gate", time:"7:00 AM"},
+    {name:"FAST NU", time:"7:45 AM", arrival:true}
+  ]},
+  { route: "40", driver: "ATIQ", phone: "0310-2710612", stops: [
+    {name:"Matka Stop", time:"7:00 AM"}, {name:"Ala Din Park", time:"7:02 AM"},
+    {name:"Lal Flat", time:"7:03 AM"}, {name:"FAST NU", time:"7:45 AM", arrival:true}
+  ]},
+  { route: "41", driver: "WASEEM", phone: "0327-4848370", stops: [
+    {name:"Bahria Town Adventure Park", time:"6:45 AM"}, {name:"Bahria International Hospital", time:""},
+    {name:"Bahria Town Apartments Tower 15", time:""}, {name:"Bahria Town Apartments Tower 20", time:""},
+    {name:"Dolmen Mall", time:""}, {name:"Tauheed Square", time:""},
+    {name:"Bahria Town Main Gate", time:""}, {name:"Malir Cant Link Road", time:""},
+    {name:"Malir Check Post – 5", time:""}, {name:"Malir Check Post – 6", time:""},
+    {name:"Malir Halt", time:""}, {name:"FAST NU", time:"7:45 AM", arrival:true}
+  ]},
+  { route: "42", driver: "SHOAIB", phone: "0311-0821801", stops: [
+    {name:"New Town Masjid", time:"6:45 AM"}, {name:"Jamshed Road", time:"6:46 AM"},
+    {name:"Yadgar Fish", time:"6:48 AM"}, {name:"New Town Chandni Chowk", time:"6:52 AM"},
+    {name:"Askari – IV", time:"7:05 AM"}, {name:"FAST NU", time:"7:45 AM", arrival:true}
+  ]},
+];
+
+const JADOON = [
+  { route:"R:2", driver:"Razaq", phone:"03177153606", stops:[
+    {name:"G3 Stop",time:"6:35 AM"},{name:"KBACHS Society / Sachal Colony",time:"6:55 AM"},
+    {name:"Shahmir Colony Gate",time:"6:56 AM"},{name:"Makhdoom Bilawal",time:"6:57 AM"},
+    {name:"Chapal Bangalows",time:"6:58 AM"},{name:"Memon Medical Hospital",time:"7:00 AM"},
+    {name:"Roofi Banglos",time:"7:01 AM"},{name:"Sunlay Bangalows",time:"7:02 AM"},
+    {name:"Safoora",time:"7:05 AM"},{name:"FAST NU",time:"7:45 AM",arrival:true}
+  ]},
+  { route:"R:3", driver:"Zeeshan", phone:"03121086755", stops:[
+    {name:"Rabia City",time:"6:25 AM"},{name:"Pahalwan Goath",time:"6:30 AM"},
+    {name:"Sindh Baloch",time:"6:35 AM"},{name:"Baithak Merriage Lawn",time:"6:40 AM"},
+    {name:"Nawaz Sharif Scheme",time:"6:45 AM"},{name:"Bismillah Tower (PIA)",time:"6:46 AM"},
+    {name:"Magsi Chowke",time:"6:50 AM"},{name:"FAST NU",time:"7:45 AM",arrival:true}
+  ]},
+  { route:"R:3B", driver:"Shahid", phone:"0315 8210003", stops:[
+    {name:"Chishti Nagar",time:"6:40 AM"},{name:"Kamran Chowrangi",time:"6:45 AM"},
+    {name:"Tyre Puncture Shop",time:"6:48 AM"},{name:"Munawar Chowrangi",time:"6:50 AM"},
+    {name:"Sardar CNG",time:"6:55 AM"},{name:"Nawabish",time:"7:00 AM"},
+    {name:"FAST NU",time:"7:45 AM",arrival:true}
+  ]},
+  { route:"R:4", driver:"M Ali", phone:"0300-6881595", stops:[
+    {name:"Maymar Gate",time:"6:30 AM"},{name:"Jamali Pull",time:"6:45 AM"},
+    {name:"Al Asif",time:"6:48 AM"},{name:"Abbas Town",time:"6:50 AM"},
+    {name:"Paradise Bakery",time:"6:52 AM"},{name:"FAST NU",time:"7:45 AM",arrival:true}
+  ]},
+  { route:"R:4B", driver:"Babu", phone:"03232335735", stops:[
+    {name:"Maskan",time:"6:55 AM"},{name:"Disco Bakery",time:"6:58 AM"},
+    {name:"Rimjim Hall",time:"7:00 AM"},{name:"Dhaka Sweet",time:"7:02 AM"},
+    {name:"FAST NU",time:"7:45 AM",arrival:true}
+  ]},
+  { route:"R:5", driver:"Zardari", phone:"03120823487", stops:[
+    {name:"Saima Arabian",time:"6:30 AM"},{name:"4K Stop",time:"6:35 AM"},
+    {name:"2 Minute",time:"6:36 AM"},{name:"Power House",time:"6:38 AM"},
+    {name:"Saleem Center",time:"6:40 AM"},{name:"UP-More",time:"6:42 AM"},
+    {name:"Nagan (Dahli Hall)",time:"6:44 AM"},{name:"Alnoor Edhi Center",time:"6:50 AM"},
+    {name:"FAST NU",time:"7:45 AM",arrival:true}
+  ]},
+  { route:"R:5B", driver:"Jibran", phone:"0306-2389693", stops:[
+    {name:"Dolmen Mall",time:"6:35 AM"},{name:"5 Star",time:"6:37 AM"},
+    {name:"Farooq-e-Azam",time:"6:38 AM"},{name:"KIHD",time:"6:50 AM"},
+    {name:"Lucky 1",time:"7:02 AM"},{name:"Moti Mahal",time:"7:04 AM"},
+    {name:"Gulshan Dhaka",time:"7:05 AM"},{name:"FAST NU",time:"7:45 AM",arrival:true}
+  ]},
+  { route:"R:6", driver:"Ahsan", phone:"03022844393", stops:[
+    {name:"Ajmair Nagri",time:"6:30 AM"},{name:"Bombay Bakery",time:"6:31 AM"},
+    {name:"Oxford School",time:"6:32 AM"},{name:"Bara Dari",time:"6:33 AM"},
+    {name:"Babul Islam",time:"6:35 AM"},{name:"Disco More",time:"6:37 AM"},
+    {name:"Fazal Mill",time:"6:55 AM"},{name:"FAST NU",time:"7:45 AM",arrival:true}
+  ]},
+  { route:"R:6B", driver:"Ahsan", phone:"03022844393", stops:[
+    {name:"Anda More",time:"6:40 AM"},{name:"Haider Food",time:"6:41 AM"},
+    {name:"DC Office",time:"6:45 AM"},{name:"Peoples Chowrangi",time:"6:47 AM"},
+    {name:"Gulberg",time:"6:49 AM"},{name:"Raheem Hospital",time:"6:50 AM"},
+    {name:"Water Pump More",time:"6:51 AM"},{name:"Ancholi",time:"6:53 AM"},
+    {name:"Suhrab Goth",time:"6:54 AM"},{name:"Fazal Mill",time:"6:55 AM"},
+    {name:"FAST NU",time:"7:45 AM",arrival:true}
+  ]},
+  { route:"R:7", driver:"Imran", phone:"03112687138", stops:[
+    {name:"Esa Lab 5 Star",time:"6:35 AM"},{name:"Donesil",time:"6:35 AM"},
+    {name:"Landi Kotal",time:"6:37 AM"},{name:"Tahir Villas",time:"6:42 AM"},
+    {name:"Shadab Masjid",time:"6:43 AM"},{name:"Gulberg Thana",time:"6:45 AM"},
+    {name:"Shahzad Store",time:"6:47 AM"},{name:"FAST NU",time:"7:45 AM",arrival:true}
+  ]},
+  { route:"R:8", driver:"Aman", phone:"0330-2036783", stops:[
+    {name:"2k Stop",time:"6:42 AM"},{name:"Mateen Food",time:"6:45 AM"},
+    {name:"Dental College",time:"6:48 AM"},{name:"Green House",time:"6:50 AM"},
+    {name:"FAST NU",time:"7:45 AM",arrival:true}
+  ]},
+  { route:"R:8B", driver:"Ataullah", phone:"03257058239", stops:[
+    {name:"Naya Nazimabad",time:"6:35 AM"},{name:"Nusrat Bhutto Colony",time:"6:40 AM"},
+    {name:"Shadman 1",time:"6:45 AM"},{name:"Shadman 2",time:"6:46 AM"},
+    {name:"FAST NU",time:"7:45 AM",arrival:true}
+  ]},
+  { route:"R:9", driver:"Aslam", phone:"03171068856", stops:[
+    {name:"Red House",time:"6:42 AM"},{name:"Mariya App",time:"6:43 AM"},
+    {name:"Café Alhabib",time:"6:44 AM"},{name:"Café 2 Days",time:"6:45 AM"},
+    {name:"Namak Bank",time:"6:46 AM"},{name:"Shafique More",time:"6:47 AM"},
+    {name:"Power House",time:"6:48 AM"},{name:"Alnoor",time:"6:50 AM"},
+    {name:"FAST NU",time:"7:45 AM",arrival:true}
+  ]},
+  { route:"R:9B", driver:"Zahid", phone:"03101249985", stops:[
+    {name:"Masjid Khairul Bashir",time:"6:40 AM"},{name:"CNG Pump",time:"6:42 AM"},
+    {name:"Usman Ghani Masjid",time:"6:44 AM"},{name:"Mochi Gali",time:"6:46 AM"},
+    {name:"Shipowner",time:"6:48 AM"},{name:"Lady Bird",time:"6:50 AM"},
+    {name:"Imam Clinic",time:"6:52 AM"},{name:"FAST NU",time:"7:45 AM",arrival:true}
+  ]},
+  { route:"R:10", driver:"Wazir", phone:"0313 5627896", stops:[
+    {name:"Hayderi Super Mart KDA",time:"6:45 AM"},{name:"Ziauddin",time:"6:48 AM"},
+    {name:"Landikotal",time:"6:52 AM"},{name:"Tahir Villas",time:"6:55 AM"},
+    {name:"Ayesha Manzil More",time:"6:56 AM"},{name:"Naseer Abad",time:"7:00 AM"},
+    {name:"FAST NU",time:"7:45 AM",arrival:true}
+  ]},
+  { route:"R:17", driver:"Fahad", phone:"03041561262", stops:[
+    {name:"Karimabad",time:"6:35 AM"},{name:"Ayesha Manzil",time:"6:37 AM"},
+    {name:"Bhai Jan Chowke",time:"6:39 AM"},{name:"8.5 Number",time:"6:40 AM"},
+    {name:"Gulshan-e-Shameem",time:"6:43 AM"},{name:"FAST NU",time:"7:45 AM",arrival:true}
+  ]},
+  { route:"R:18", driver:"Hasnain", phone:"03132693179", stops:[
+    {name:"7 No. Nazimabad",time:"6:25 AM"},{name:"Abbasi HP",time:"6:27 AM"},
+    {name:"Khilafat Chowke",time:"6:30 AM"},{name:"Board Office",time:"6:33 AM"},
+    {name:"FAST NU",time:"7:45 AM",arrival:true}
+  ]},
+  { route:"R:20", driver:"Shani", phone:"0312-2068035", stops:[
+    {name:"Bin Hashim",time:"6:25 AM"},{name:"Commander CNG",time:"6:30 AM"},
+    {name:"Kazimabad",time:"6:45 AM"},{name:"Tank Chowke",time:"6:48 AM"},
+    {name:"Model More",time:"6:50 AM"},{name:"Model Colony",time:"6:55 AM"},
+    {name:"Baraf Khana to Kala Board",time:"7:00 AM"},{name:"FAST NU",time:"7:45 AM",arrival:true}
+  ]},
+  { route:"R:23", driver:"Adnan", phone:"03032650959", stops:[
+    {name:"Orangi Town # 5",time:"6:30 AM"},{name:"Abdullah College",time:"6:32 AM"},
+    {name:"Katti Pahari",time:"6:36 AM"},{name:"Ali Asghar Stadium",time:"6:38 AM"},
+    {name:"Star House",time:"6:40 AM"},{name:"LDA",time:"6:42 AM"},
+    {name:"FAST NU",time:"7:45 AM",arrival:true}
+  ]},
+  { route:"R:23B", driver:"Adnan", phone:"03032650959", stops:[
+    {name:"Javid Nihari",time:"6:35 AM"},{name:"Bhaijan Chowke",time:"6:40 AM"},
+    {name:"Mukka Choke",time:"6:42 AM"},{name:"13D 8-1/2",time:"6:45 AM"},
+    {name:"Rab Medical",time:"6:46 AM"},{name:"FAST NU",time:"7:45 AM",arrival:true}
+  ]},
+  { route:"R:24", driver:"Javaid", phone:"0300-2048247", stops:[
+    {name:"Lala Zar Nipa",time:"6:35 AM"},{name:"Safari Park",time:"6:40 AM"},
+    {name:"Samama",time:"6:43 AM"},{name:"Continental",time:"6:45 AM"},
+    {name:"KESC",time:"6:46 AM"},{name:"Johar Chowrangi",time:"6:55 AM"},
+    {name:"FAST NU",time:"7:45 AM",arrival:true}
+  ]},
+  { route:"R:24B", driver:"Wali", phone:"03337291583", stops:[
+    {name:"Kamran Chowrangi",time:"6:48 AM"},{name:"Munawar Chowrangi",time:"6:50 AM"},
+    {name:"Darul Sehat",time:"6:52 AM"},{name:"Rado Center",time:"6:55 AM"},
+    {name:"FAST NU",time:"7:45 AM",arrival:true}
+  ]},
+  { route:"R:25", driver:"Sabir", phone:"0310-1033697", stops:[
+    {name:"Saima Opposite Rizvia",time:"6:30 AM"},{name:"Al-Hira",time:"6:35 AM"},
+    {name:"Puncture Shop Saadi Road",time:"6:37 AM"},{name:"Amro Society",time:"6:42 AM"},
+    {name:"Sadi Town",time:"6:45 AM"},{name:"Police Society",time:"6:48 AM"},
+    {name:"Falcon",time:"7:00 AM"},{name:"6 No. Check Post",time:"7:05 AM"},
+    {name:"FAST NU",time:"7:45 AM",arrival:true}
+  ]},
+  { route:"R:25B", driver:"Zakir", phone:"0312-2937461", stops:[
+    {name:"KDA",time:"6:30 AM"},{name:"Malik Society",time:"6:31 AM"},
+    {name:"KDA (2nd stop)",time:"6:35 AM"},{name:"PCSR",time:"6:36 AM"},
+    {name:"Quetta Town",time:"6:38 AM"},{name:"Sumaira Chowke",time:"6:43 AM"},
+    {name:"Anara Garden",time:"6:45 AM"},{name:"Noman Garden",time:"6:47 AM"},
+    {name:"Al Azhar",time:"6:50 AM"},{name:"FAST NU",time:"7:45 AM",arrival:true}
+  ]},
+  { route:"R:26", driver:"Zeeshan", phone:"03158822481", stops:[
+    {name:"NED University",time:"6:45 AM"},{name:"Karachi University",time:"6:45 AM"},
+    {name:"Commander CNG",time:"6:47 AM"},{name:"G-10 Gull House",time:"6:57 AM"},
+    {name:"FAST NU",time:"7:45 AM",arrival:true}
+  ]},
+  { route:"R:26B", driver:"Mehboob", phone:"03128891162", stops:[
+    {name:"Fariya Chowke",time:""},{name:"Khatam-e-Nabovat",time:"6:40 AM"},
+    {name:"Kaneez Fatima",time:"6:41 AM"},{name:"Madras Chowke",time:"6:42 AM"},
+    {name:"Dow Medical",time:"6:45 AM"},{name:"Mosamiyat",time:"6:48 AM"},
+    {name:"Johar Complex (Bin Hashim)",time:"6:50 AM"},{name:"Safora",time:"6:52 AM"},
+    {name:"Check Post 5",time:"6:55 AM"},{name:"FAST NU",time:"7:45 AM",arrival:true}
+  ]},
+  { route:"R:27", driver:"Sajid", phone:"03118242002", stops:[
+    {name:"Dentist Society",time:""},{name:"Officers Society",time:"6:30 AM"},
+    {name:"Teacher Society",time:"6:31 AM"},{name:"Madras Chowke",time:"6:33 AM"},
+    {name:"Suchal",time:"6:35 AM"},{name:"Furniture Market",time:"6:40 AM"},
+    {name:"Rizvia",time:"6:43 AM"},{name:"Gulshan Umair",time:"6:48 AM"},
+    {name:"Saima",time:"6:55 AM"},{name:"FAST NU",time:"7:00 AM",arrival:true}
+  ]},
+];
+
+// ─── RENDER CARD ───
+function makeCard(r, group) {
+  const card = document.createElement('div');
+  card.className = 'route-card';
+  card.dataset.group = group;
+  card.dataset.search = (r.route + ' ' + r.driver + ' ' + r.stops.map(s=>s.name).join(' ')).toLowerCase();
+
+  const stopCount = r.stops.filter(s=>!s.arrival).length;
+
+  card.innerHTML = `
+    <div class="card-header">
+      <div class="card-header-left">
+        <div class="route-num">${group === 'jadoon' ? '' : ''}Route ${r.route}</div>
+        <div>
+          <div class="driver-name">${r.driver}</div>
+          <div class="driver-phone">${r.phone}</div>
+        </div>
+      </div>
+      <div class="card-badge">${stopCount} stops</div>
+    </div>
+    <div class="stops-list">
+      ${r.stops.map((s,i) => `
+        <div class="stop-row ${s.arrival ? 'fast-row' : ''}">
+          <div class="stop-dot"></div>
+          <div class="stop-name">${s.name}</div>
+          ${s.time ? `<div class="stop-time">${s.time}</div>` : ''}
+        </div>
+      `).join('')}
+    </div>
+    <button class="card-toggle">
+      <span>View ${stopCount} stops</span>
+      <span class="arrow">▾</span>
+    </button>
+  `;
+
+  card.querySelector('.card-toggle').addEventListener('click', () => {
+    const expanded = card.classList.toggle('expanded');
+    card.querySelector('.card-toggle span:first-child').textContent =
+      expanded ? 'Hide stops' : `View ${stopCount} stops`;
+  });
+
+  return card;
+}
+
+// ─── BUILD GRIDS ───
+const nadeemGrid = document.getElementById('nadeem-grid');
+const jadoonGrid = document.getElementById('jadoon-grid');
+const noResults  = document.getElementById('no-results');
+
+NADEEM.forEach(r => nadeemGrid.appendChild(makeCard(r, 'nadeem')));
+JADOON.forEach(r => {
+  const card = makeCard(r, 'jadoon');
+  jadoonGrid.insertBefore(card, noResults);
+});
+
+document.getElementById('totalRoutes').textContent = NADEEM.length + JADOON.length;
+document.getElementById('totalDrivers').textContent = new Set([...NADEEM,...JADOON].map(r=>r.driver)).size;
+document.getElementById('nadeem-count').textContent = NADEEM.length + ' routes';
+document.getElementById('jadoon-count').textContent = JADOON.length + ' routes';
+
+// ─── SEARCH ───
+const allCards = () => document.querySelectorAll('.route-card');
+
+function applyFilters() {
+  const q = document.getElementById('search').value.toLowerCase().trim();
+  const active = document.querySelector('.filter-btn.active').dataset.filter;
+
+  let visibleN = 0, visibleJ = 0;
+  allCards().forEach(card => {
+    const matchSearch = !q || card.dataset.search.includes(q);
+    const matchGroup  = active === 'all' || card.dataset.group === active;
+    const show = matchSearch && matchGroup;
+    card.classList.toggle('hidden', !show);
+    if (show && card.dataset.group === 'nadeem') visibleN++;
+    if (show && card.dataset.group === 'jadoon') visibleJ++;
+  });
+
+  document.getElementById('nadeem-count').textContent = visibleN + ' routes';
+  document.getElementById('jadoon-count').textContent = visibleJ + ' routes';
+
+  // Show/hide section headers
+  const nHeader = document.getElementById('nadeem-header');
+  const jHeader = document.getElementById('jadoon-header');
+  nHeader.style.display = (active === 'jadoon') ? 'none' : 'flex';
+  jHeader.style.display = (active === 'nadeem') ? 'none' : 'flex';
+
+  noResults.classList.toggle('visible', visibleN + visibleJ === 0);
+}
+
+document.getElementById('search').addEventListener('input', applyFilters);
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    applyFilters();
+  });
+});
+</script>
+</body>
+</html>
