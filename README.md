@@ -1,4 +1,4 @@
-# Transport Management System (Web)
+# Transport Management System
 
 A responsive web platform for bus route booking and schedule tracking.
 
