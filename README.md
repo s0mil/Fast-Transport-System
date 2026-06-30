@@ -1,183 +1,174 @@
-🚍 FAST Transport System
+# 🚍 FAST Transport System
 
-<div align="center">
+> A modern Transport Route Management System for **FAST-NUCES Karachi** with an elegant dashboard, smart search, live statistics, and a responsive user interface.
 
-A Modern Transport Route Management System for FAST-NUCES Karachi
+![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
+![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
+![Responsive](https://img.shields.io/badge/Responsive-Yes-success?style=for-the-badge)
+![Status](https://img.shields.io/badge/Status-Active-brightgreen?style=for-the-badge)
 
-Search transport routes instantly by Area, Driver, or Route Number with a beautiful dashboard interface.
+---
 
-🌐 Live Demo: https://fasttransport.vercel.app/
+# 🌐 Live Demo
 
-⭐ If you like this project, consider giving it a Star.
+### 🚀 https://fasttransport.vercel.app/
 
-</div>
+---
 
-📖 Overview
+# 📖 About
 
-FAST Transport System is a modern web application developed to simplify transport route searching for FAST-NUCES Karachi students.
+FAST Transport System is a modern web application built to simplify transport route searching for FAST-NUCES Karachi students.
 
-Instead of manually searching through lengthy transport documents, students can instantly find their transport information using an intuitive and responsive dashboard.
+Instead of manually browsing lengthy PDF files, students can instantly search transport routes using **Area**, **Driver Name**, or **Route Number** through a clean and responsive dashboard.
 
-The application combines speed, usability, and a modern UI to provide a seamless experience on both desktop and mobile devices.
+The project focuses on **speed**, **accessibility**, **modern UI**, and **better user experience**.
 
-✨ Features
-🔍 Smart Search
-Search by Area
-Search by Driver Name
-Search by Route Number
-Instant Search Results
-Smart "No Routes Found" Handling
-🚍 Route Management
-View Complete Transport Routes
-Driver-wise Route Organization
-Route Filtering
-Organized Route Cards
-📊 Dashboard
-Live Statistics
-Total Routes
-Driver Information
-Estimated Arrival Time
-🎨 Modern User Interface
-Glassmorphism Design
-Animated Background
-Floating Gradient Effects
-Interactive Cards
-Smooth Animations
-Modern Typography
-Responsive Layout
-🌙 Theme Support
-Dark Mode
-Light Mode
-Theme Toggle
-Theme Preference Saving
-⏰ Live Features
-Live Digital Clock
-Dynamic Dashboard
-Fast Client-side Filtering
-📱 Responsive Design
+---
 
-Works perfectly on:
+# ✨ Features
 
-Desktop
-Laptop
-Tablet
-Mobile Phones
-🛠️ Built With
-Technology	Purpose
-HTML5	Structure
-CSS3	Styling
-JavaScript (Vanilla)	Logic & Interactivity
-Vercel	Deployment
-📸 Preview
+## 🔍 Smart Search
 
-Add screenshots inside a folder named screenshots.
+- Search by Area
+- Search by Driver Name
+- Search by Route Number
+- Instant Search Results
+- Smart "No Routes Found" Handling
 
-screenshots/
-├── home.png
-├── search.png
-├── dashboard.png
-├── mobile.png
+## 🚍 Route Management
 
-Then display them like this:
+- Complete Transport Route Database
+- Driver-wise Routes
+- Route Filtering
+- Organized Route Cards
 
-![Home](screenshots/home.png)
+## 📊 Dashboard
 
-![Search](screenshots/search.png)
+- Live Statistics
+- Total Routes
+- Driver Information
+- Estimated Arrival Time
 
-![Dashboard](screenshots/dashboard.png)
-🚀 Live Website
-🌐 https://fasttransport.vercel.app/
-💻 Installation
+## 🎨 Modern Interface
 
-Clone the repository
+- Glassmorphism Design
+- Animated Background
+- Floating Gradient Effects
+- Interactive Cards
+- Smooth Animations
+- Modern Typography
 
-git clone https://github.com/s0mil/Fast-Transport-System.git
+## 🌙 Theme
 
-Move into the project directory
+- Dark Mode
+- Light Mode
+- Theme Toggle
+- Saved User Preference
 
-cd Fast-Transport-System
+## ⏰ Live Features
 
-Open
+- Live Digital Clock
+- Dynamic Dashboard
+- Fast Client-side Search
 
-index.html
+## 📱 Responsive Design
 
-in your browser.
+- Desktop
+- Laptop
+- Tablet
+- Mobile
 
-📂 Project Structure
+---
+
+# 🛠️ Tech Stack
+
+- HTML5
+- CSS3
+- JavaScript (Vanilla)
+- Vercel
+
+---
+
+# 📂 Project Structure
+
+```text
 Fast-Transport-System/
 │
 ├── index.html
 ├── README.md
-├── screenshots/
-│   ├── home.png
-│   ├── search.png
-│   ├── dashboard.png
-│   └── mobile.png
-│
-└── assets/
-💡 Why This Project?
+├── assets/
+└── screenshots/
+```
 
-Students often spend valuable time searching transport information from lengthy PDFs.
+---
 
-This project provides a fast, searchable, and user-friendly interface where transport routes can be found within seconds.
+# 🚀 Installation
 
-The goal is to improve accessibility, save time, and provide a modern digital experience.
+```bash
+git clone https://github.com/s0mil/Fast-Transport-System.git
+```
 
-🚀 Future Improvements
-Google Maps Integration
-Live Bus Tracking
-Admin Dashboard
-Student Login System
-Route Notifications
-Multiple Campus Support
-Progressive Web App (PWA)
-Offline Support
-Favorite Routes
-Search History
-🎯 Highlights
-Clean UI
-Fast Performance
-Modern Dashboard
-Fully Responsive
-Pure HTML/CSS/JavaScript
-Easy to Maintain
-Lightweight
-Open Source
-👨‍💻 Developer
-Somil
+```bash
+cd Fast-Transport-System
+```
 
-Computer Science Student
-FAST – National University of Computer and Emerging Sciences
+Open
 
-GitHub
+```text
+index.html
+```
+
+---
+
+# 💡 Why This Project?
+
+Students usually spend several minutes searching transport routes inside PDF documents.
+
+This project eliminates that problem by providing a fast, searchable, and visually appealing interface where transport information can be found within seconds.
+
+---
+
+# 🚀 Future Improvements
+
+- Google Maps Integration
+- Live Bus Tracking
+- Admin Dashboard
+- Student Login
+- Notifications
+- Multiple Campus Support
+- Progressive Web App (PWA)
+
+---
+
+# 👨‍💻 Developer
+
+## Somil
+
+**Computer Science Student**
+
+### GitHub
 
 https://github.com/s0mil
 
-LinkedIn
+### LinkedIn
 
 https://www.linkedin.com/in/s0mil/
 
-🤝 Contributing
+---
 
-Contributions, suggestions, and improvements are always welcome.
+# ⭐ Support
 
-Fork the repository
-Create your feature branch
-Commit your changes
-Push the branch
-Open a Pull Request
-⭐ Support
+If you found this project useful, please consider giving it a **Star ⭐**.
 
-If this project helped you, please give it a Star ⭐ on GitHub.
+It helps the project grow and motivates future improvements.
 
-It motivates future development and improvements.
+---
 
 <div align="center">
 
-🚍 FAST Transport System
+### 🚍 FAST Transport System
 
-Made with ❤️ by Somil
-
-FAST-NUCES Karachi
+Made with ❤️ by **Somil**
 
 </div>
