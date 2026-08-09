@@ -6,7 +6,7 @@
 
 [![Live Demo](https://img.shields.io/badge/🚀_LIVE_DEMO-FAST_TRANSPORT-E31E24?style=for-the-badge)](https://fasttransport.vercel.app/)
 
-[![Routes](https://img.shields.io/badge/🚌_ROUTES-69-FFD700?style=for-the-badge\&labelColor=111111)](#)
+[![Routes](https://img.shields.io/badge/🚌_ROUTES-53+-FFD700?style=for-the-badge\&labelColor=111111)](#)
 
 [![AI](https://img.shields.io/badge/🤖_AI_ASSISTANT-ENABLED-00D9FF?style=for-the-badge\&labelColor=111111)](#)
 
