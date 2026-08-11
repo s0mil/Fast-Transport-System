@@ -3128,8 +3128,8 @@
       return matches.slice(0, 6);
     }
 
-    async function aiFindNearestStopsForArea(query) {
-      let areaCoords = getKnownCoords(query);
+    function aiFindNearestStopsForArea(query) {
+      let areaCoords = getApproxCoords(query);
 
       if (!areaCoords) {
         const q = query.toLowerCase();
@@ -3142,28 +3142,24 @@
           if (hit) { refStop = s; return true; }
           return false;
         }));
-        if (refStop) areaCoords = await geocodeStopName(refStop.name);
-        else areaCoords = await geocodeStopName(query);
+        if (refStop) areaCoords = getApproxCoords(refStop.name, true);
       }
 
       if (!areaCoords) return null;
-      await ensureAllStopsGeocoded();
       const seen = new Set();
       const results = [];
       ALL_ROUTES.forEach(r => {
         r.stops.forEach(s => {
           if (s.arrival) return;
-          const stopCoords = getKnownCoords(s.name);
+          const stopCoords = getApproxCoords(s.name, true);
           if (!stopCoords) return;
           const d = haversineKm(areaCoords[0], areaCoords[1], stopCoords[0], stopCoords[1]);
           const key = r.uid + '|' + s.name;
           if (!seen.has(key)) { seen.add(key); results.push({ route: r, stop: s, distance: d }); }
         });
       });
-      persistGeocodeCache();
       results.sort((a, b) => a.distance - b.distance);
-      const nearby = results.filter(r => r.distance <= MAX_NEARBY_KM);
-      return nearby.slice(0, 6);
+      return results.slice(0, 6);
     }
 
     function aiFormatNearestStopsList(results, introText) {
@@ -3174,44 +3170,63 @@
       return `${introText || '📍 Here are the nearest stops I found:'}<br>${lines}`;
     }
 
+    function isSecureContextForGeo() {
+      
+      return window.isSecureContext !== false;
+    }
+
     function aiRequestLocationForChat() {
-      return new Promise((resolve) => {
-        if (!navigator.geolocation) { resolve(false); return; }
-        navigator.geolocation.getCurrentPosition(
-          (pos) => { globalUserCoords = { lat: pos.coords.latitude, lng: pos.coords.longitude }; resolve(true); },
-          () => resolve(false),
-          { enableHighAccuracy: true, timeout: 12000, maximumAge: 60000 }
-        );
+      return new Promise((resolve, reject) => {
+        if (!navigator.geolocation) { reject({ code: 0, message: 'unsupported' }); return; }
+        if (!isSecureContextForGeo()) { reject({ code: -1, message: 'insecure' }); return; }
+
+        const tryGet = (opts, isRetry) => {
+          navigator.geolocation.getCurrentPosition(
+            (pos) => { globalUserCoords = { lat: pos.coords.latitude, lng: pos.coords.longitude }; resolve(true); },
+            (err) => {
+              
+              if (!isRetry && (err.code === err.TIMEOUT || err.code === err.POSITION_UNAVAILABLE)) {
+                tryGet({ enableHighAccuracy: false, timeout: 15000, maximumAge: 300000 }, true);
+              } else {
+                reject(err);
+              }
+            },
+            opts
+          );
+        };
+        tryGet({ enableHighAccuracy: true, timeout: 8000, maximumAge: 60000 }, false);
       });
     }
 
     async function aiNearestStopAnswer() {
       if (!globalUserCoords) {
-        const ok = await aiRequestLocationForChat();
-        if (!ok) return "I wasn't able to get your location — could you allow location access when your browser asks? Or just tell me an area name instead, like \"which route goes through Gulshan?\" and I'll find it for you.";
+        try {
+          await aiRequestLocationForChat();
+        } catch (err) {
+          if (err && err.message === 'insecure') {
+            return "Location access needs a secure (https://) connection to work — this page isn't loaded securely right now, so your browser is blocking it. Try naming an area instead, like \"which route goes through Gulshan?\" and I'll find it for you.";
+          }
+          if (err && err.code === 1) {
+            return "Location access is blocked — please allow location permission for this site in your browser settings, then ask me again. In the meantime, try naming an area instead, like \"which route goes through Gulshan?\"";
+          }
+          return "I wasn't able to get your location — could you allow location access when your browser asks, and make sure GPS/location services are turned on? Or just tell me an area name instead, like \"which route goes through Gulshan?\" and I'll find it for you.";
+        }
       }
-      await ensureAllStopsGeocoded();
       const seen = new Set();
       const results = [];
       ALL_ROUTES.forEach(r => {
         r.stops.forEach(s => {
           if (s.arrival) return;
-          const coords = getKnownCoords(s.name);
+          const coords = getApproxCoords(s.name, true);
           if (!coords) return;
           const d = haversineKm(globalUserCoords.lat, globalUserCoords.lng, coords[0], coords[1]);
           const key = r.uid + '|' + s.name;
           if (!seen.has(key)) { seen.add(key); results.push({ route: r, stop: s, distance: d }); }
         });
       });
-      persistGeocodeCache();
+      if (!results.length) return "Hmm, I couldn't match a nearby stop from your location. Try naming a specific area instead and I'll take a look.";
       results.sort((a, b) => a.distance - b.distance);
-      const nearby = results.filter(r => r.distance <= MAX_NEARBY_KM);
-      if (!nearby.length) {
-        const closest = results[0];
-        const extra = closest ? ` The closest pickup point I have is ${closest.stop.name} on Route ${closest.route.route}, about ${closest.distance.toFixed(1)} km away — outside our usual pickup range.` : '';
-        return `Hmm, I couldn't find a stop close to your current location.${extra} Try naming a specific area instead and I'll take a look.`;
-      }
-      return aiFormatNearestStopsList(nearby.slice(0, 6), '📍 Here are the pickup points closest to you:');
+      return aiFormatNearestStopsList(results.slice(0, 6), '📍 Here are the pickup points closest to you:');
     }
 
     function aiNextBusAnswer() {
@@ -3404,7 +3419,7 @@
 
       
       
-      const areaNearest = await aiFindNearestStopsForArea(q);
+      const areaNearest = aiFindNearestStopsForArea(q);
       if (areaNearest && areaNearest.length) return aiFormatNearestStopsList(areaNearest);
 
       if (NEAREST_WORD_REGEX.test(q)) {
@@ -3504,31 +3519,55 @@
       if (!aiVoiceReplyEnabled || !('speechSynthesis' in window)) return;
       const plain = html.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
       if (!plain) return;
-      window.speechSynthesis.cancel();
-      const utter = new SpeechSynthesisUtterance(plain);
-      utter.rate = 1;
-      utter.pitch = 1;
-      window.speechSynthesis.speak(utter);
+      try {
+        
+        window.speechSynthesis.cancel();
+        if (window.speechSynthesis.paused) window.speechSynthesis.resume();
+        const utter = new SpeechSynthesisUtterance(plain);
+        utter.rate = 1;
+        utter.pitch = 1;
+        utter.lang = 'en-US';
+
+        const voices = window.speechSynthesis.getVoices();
+        if (voices && voices.length) {
+          const preferred = voices.find(v => /en-US|en_US/i.test(v.lang)) || voices.find(v => /^en/i.test(v.lang));
+          if (preferred) utter.voice = preferred;
+        }
+
+        
+        const speakNow = () => {
+          try { window.speechSynthesis.speak(utter); } catch (e) {  }
+        };
+        if (!voices || !voices.length) {
+          
+          window.speechSynthesis.onvoiceschanged = () => { speakNow(); window.speechSynthesis.onvoiceschanged = null; };
+          
+          setTimeout(speakNow, 250);
+        } else {
+          speakNow();
+        }
+
+        
+        clearTimeout(aiSpeak._watchdog);
+        aiSpeak._watchdog = setTimeout(() => {
+          if (window.speechSynthesis.speaking && !window.speechSynthesis.paused) return;
+          if (!window.speechSynthesis.speaking) speakNow();
+        }, 400);
+      } catch (e) {  }
+    }
+
+    
+    if ('speechSynthesis' in window) {
+      window.speechSynthesis.getVoices();
+      window.speechSynthesis.addEventListener('voiceschanged', () => window.speechSynthesis.getVoices());
     }
 
     const SpeechRecognitionCtor = window.SpeechRecognition || window.webkitSpeechRecognition;
     const aiMicBtn = document.getElementById('aiMicBtn');
     let aiRecognition = null;
     let aiListening = false;
-    
-    const aiMicSecure = window.isSecureContext !== false;
 
-    if (SpeechRecognitionCtor && aiMicBtn && !aiMicSecure) {
-      
-      aiMicBtn.addEventListener('click', () => {
-        const panel = document.getElementById('aiChatPanel');
-        if (panel && !panel.classList.contains('open')) panel.classList.add('open');
-        if (typeof aiAppendMessage === 'function') {
-          aiAppendMessage('bot', "Voice input needs a secure (https://) connection to access your microphone — this page isn't loaded over https, so the mic can't be used here.");
-        }
-      });
-      aiMicBtn.title = 'Voice input needs https to work';
-    } else if (SpeechRecognitionCtor && aiMicBtn) {
+    if (SpeechRecognitionCtor && aiMicBtn) {
       aiRecognition = new SpeechRecognitionCtor();
       aiRecognition.continuous = false;
       aiRecognition.interimResults = false;
@@ -3570,9 +3609,25 @@
 
       aiMicBtn.addEventListener('click', () => {
         if (aiListening) { aiRecognition.stop(); return; }
+        if (!isSecureContextForGeo()) {
+          if (typeof aiAppendMessage === 'function') {
+            aiAppendMessage('bot', "Voice input needs a secure (https://) connection to work — this page isn't loaded securely right now, so the browser is blocking mic access. You can still type your question below. ⌨️");
+          }
+          return;
+        }
         const panel = document.getElementById('aiChatPanel');
         if (panel && !panel.classList.contains('open')) panel.classList.add('open');
-        try { aiRecognition.start(); } catch (e) {  }
+        try {
+          aiRecognition.start();
+        } catch (e) {
+          
+          try { aiRecognition.stop(); } catch (e2) {}
+          aiListening = false;
+          aiMicBtn.classList.remove('listening');
+          if (typeof aiAppendMessage === 'function') {
+            aiAppendMessage('bot', "Couldn't start the mic just then — please tap it again.");
+          }
+        }
       });
     } else if (aiMicBtn) {
       
@@ -3688,7 +3743,6 @@
       "paf": [24.8600, 67.0900],
       "clifton": [24.8150, 67.0300],
       "dha": [24.8020, 67.0650],
-      "boat basin": [24.8280, 67.0330],
       "zamzama": [24.8180, 67.0350],
       "bilawal": [24.7980, 67.0430],
       "khayaban": [24.8000, 67.0500],
@@ -3696,7 +3750,6 @@
       "sunset": [24.8100, 67.0500],
       "hyper star": [24.8100, 67.0300],
       "forum": [24.8080, 67.0330],
-      "teen talwar": [24.8280, 67.0300],
       "race course": [24.8720, 67.0620],
       "cant station": [24.8500, 67.0250],
       "cantt station": [24.8500, 67.0250],
@@ -3713,8 +3766,6 @@
       "suhrab goth": [24.9530, 67.0850],
       "gulberg": [24.9350, 67.0730],
       "ancholi": [24.9250, 67.0620],
-      "water pump": [24.9270, 67.0490],
-      "karimabad": [24.9200, 67.0470],
       "federal b": [24.9200, 67.0550],
       "north nazimabad": [24.9370, 67.0500],
       "nazimabad": [24.9060, 67.0350],
@@ -3724,7 +3775,6 @@
       "guro mandir": [24.8720, 67.0270],
       "soldier bazar": [24.8700, 67.0300],
       "garden": [24.8750, 67.0250],
-      "numaish": [24.8700, 67.0300],
       "saddar": [24.8570, 67.0230],
       "tariq road": [24.8680, 67.0620],
       "bahadurabad": [24.8830, 67.0570],
@@ -3809,79 +3859,6 @@
       return null;
     }
 
-    
-    
-    
-    const GEOCODE_CACHE_KEY = 'fastTransportGeocodeCacheV1';
-    let geocodeCache = {};
-    try {
-      geocodeCache = JSON.parse(localStorage.getItem(GEOCODE_CACHE_KEY) || '{}');
-    } catch (e) { geocodeCache = {}; }
-    let geocodeCacheDirty = false;
-    function persistGeocodeCache() {
-      if (!geocodeCacheDirty) return;
-      try { localStorage.setItem(GEOCODE_CACHE_KEY, JSON.stringify(geocodeCache)); geocodeCacheDirty = false; } catch (e) {}
-    }
-
-    
-    function getKnownCoords(name) {
-      const key = name.trim().toLowerCase();
-      if (geocodeCache[key]) return geocodeCache[key];
-      return getApproxCoords(name);
-    }
-
-    
-    async function geocodeStopName(name) {
-      const key = name.trim().toLowerCase();
-      if (geocodeCache[key]) return geocodeCache[key];
-      const approx = getApproxCoords(name);
-      if (approx) { geocodeCache[key] = approx; geocodeCacheDirty = true; return approx; }
-      try {
-        const url = `https://nominatim.openstreetmap.org/search?format=json&limit=1&countrycodes=pk&q=${encodeURIComponent(name + ', Karachi, Pakistan')}`;
-        const resp = await fetch(url, { headers: { 'Accept': 'application/json' } });
-        if (resp.ok) {
-          const data = await resp.json();
-          if (data && data.length) {
-            const coords = [parseFloat(data[0].lat), parseFloat(data[0].lon)];
-            geocodeCache[key] = coords;
-            geocodeCacheDirty = true;
-            return coords;
-          }
-        }
-      } catch (e) { }
-      return null;
-    }
-
-    
-    async function mapWithConcurrency(items, limit, fn) {
-      let idx = 0;
-      async function worker() {
-        while (idx < items.length) {
-          const cur = idx++;
-          await fn(items[cur], cur);
-        }
-      }
-      const workers = Array.from({ length: Math.min(limit, items.length) }, worker);
-      await Promise.all(workers);
-    }
-
-    
-    let allStopsGeocodePromise = null;
-    function ensureAllStopsGeocoded(onProgress) {
-      if (allStopsGeocodePromise) return allStopsGeocodePromise;
-      const uniqueNames = new Set();
-      ALL_ROUTES.forEach(r => r.stops.forEach(s => { if (!s.arrival) uniqueNames.add(s.name); }));
-      const names = Array.from(uniqueNames).filter(n => !getKnownCoords(n));
-      if (!names.length) { allStopsGeocodePromise = Promise.resolve(); return allStopsGeocodePromise; }
-      let done = 0;
-      allStopsGeocodePromise = mapWithConcurrency(names, 6, async (name) => {
-        await geocodeStopName(name);
-        done++;
-        if (onProgress) onProgress(done, names.length);
-      }).then(() => { persistGeocodeCache(); });
-      return allStopsGeocodePromise;
-    }
-
     function haversineKm(lat1, lon1, lat2, lon2) {
       const R = 6371;
       const dLat = (lat2 - lat1) * Math.PI / 180;
@@ -3889,9 +3866,6 @@
       const a = Math.sin(dLat/2)**2 + Math.cos(lat1*Math.PI/180) * Math.cos(lat2*Math.PI/180) * Math.sin(dLon/2)**2;
       return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
     }
-
-    
-    const MAX_NEARBY_KM = 12;
 
     function estimateTime(km) {
       if (km <= 1.5) return { label: `~${Math.max(2, Math.round(km / 5 * 60))} min walk` };
@@ -3930,12 +3904,12 @@
         });
       }
 
-      function computeDistancesPass() {
+      function computeDistances() {
         ALL_ROUTES.forEach(r => {
           let best = null;
           r.stops.forEach(s => {
             if (s.arrival) return;
-            const coords = getKnownCoords(s.name);
+            const coords = getApproxCoords(s.name, true);
             if (!coords) return;
             const d = haversineKm(userCoords.lat, userCoords.lng, coords[0], coords[1]);
             if (!best || d < best.distance) best = { distance: d, stopName: s.name, stopTime: s.time || '' };
@@ -3944,38 +3918,16 @@
         });
       }
 
-      
-      
-      
-      async function computeDistances() {
-        computeDistancesPass();
-        renderNearby();
-        let lastRender = Date.now();
-        await ensureAllStopsGeocoded((done, total) => {
-          const now = Date.now();
-          if (now - lastRender > 400 || done === total) {
-            lastRender = now;
-            computeDistancesPass();
-            renderNearby();
-            if (sortActive) reorderByDistance();
-            statusEl.textContent = `Finding nearby stops… (${done}/${total})`;
-          }
-        });
-        computeDistancesPass();
-        renderNearby();
-        if (sortActive) reorderByDistance();
-      }
-
       function renderNearby() {
         const ranked = ALL_ROUTES
-          .filter(r => routeDistances[r.uid] && routeDistances[r.uid].distance <= MAX_NEARBY_KM)
+          .filter(r => routeDistances[r.uid])
           .sort((a, b) => routeDistances[a.uid].distance - routeDistances[b.uid].distance)
           .slice(0, 8);
 
         nearbyGrid.innerHTML = '';
 
         if (!ranked.length) {
-          nearbyGrid.innerHTML = '<div class="nearby-empty">No pickup points found close to your current location — try the search bar to browse routes by area instead.</div>';
+          nearbyGrid.innerHTML = '<div class="nearby-empty">Could not match a nearby stop from your location yet — try the search bar to browse routes by area instead.</div>';
         } else {
           ranked.forEach((r, i) => {
             const info = routeDistances[r.uid];
@@ -4047,9 +3999,44 @@
         else restoreOriginalOrder();
       });
 
+      function onLocationSuccess(pos) {
+        userCoords = { lat: pos.coords.latitude, lng: pos.coords.longitude };
+        globalUserCoords = userCoords;
+        computeDistances();
+        renderNearby();
+        btn.classList.remove('loading');
+        btn.disabled = false;
+        btn.querySelector('.btn-label').textContent = 'Refresh Location';
+        sortBtn.disabled = false;
+        statusEl.className = 'locate-status success';
+        const acc = pos.coords.accuracy ? ` (±${Math.round(pos.coords.accuracy)}m)` : '';
+        statusEl.textContent = `Location found${acc} — showing nearby routes below.`;
+        document.getElementById('nearby-header').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+
+      function onLocationError(err) {
+        btn.classList.remove('loading');
+        btn.disabled = false;
+        statusEl.className = 'locate-status error';
+        if (err.code === err.PERMISSION_DENIED) {
+          statusEl.textContent = 'Location permission denied. Enable it in your browser/site settings (tap the lock icon in the address bar) to see nearby routes.';
+        } else if (err.code === err.POSITION_UNAVAILABLE) {
+          statusEl.textContent = 'Could not determine your location — make sure location/GPS services are turned on for your device and browser, then try again.';
+        } else if (err.code === err.TIMEOUT) {
+          statusEl.textContent = 'Location request timed out. Please try again, ideally with a clear view of the sky or a stronger Wi‑Fi/data connection.';
+        } else {
+          statusEl.textContent = 'Something went wrong getting your location. Please try again.';
+        }
+      }
+
       btn.addEventListener('click', () => {
         if (!navigator.geolocation) {
           statusEl.textContent = "Location isn't supported in this browser.";
+          statusEl.className = 'locate-status error';
+          return;
+        }
+        if (!isSecureContextForGeo()) {
+          statusEl.textContent = "Location requires a secure (https://) connection — this page isn't loaded securely, so the browser is blocking location access.";
           statusEl.className = 'locate-status error';
           return;
         }
@@ -4058,36 +4045,23 @@
         statusEl.className = 'locate-status';
         statusEl.textContent = 'Requesting location permission…';
 
+        
         navigator.geolocation.getCurrentPosition(
-          async (pos) => {
-            userCoords = { lat: pos.coords.latitude, lng: pos.coords.longitude };
-            globalUserCoords = userCoords;
-            statusEl.className = 'locate-status success';
-            statusEl.textContent = 'Location found — finding nearby stops…';
-            document.getElementById('nearby-header').scrollIntoView({ behavior: 'smooth', block: 'start' });
-            await computeDistances();
-            btn.classList.remove('loading');
-            btn.disabled = false;
-            btn.querySelector('.btn-label').textContent = 'Refresh Location';
-            sortBtn.disabled = false;
-            statusEl.className = 'locate-status success';
-            statusEl.textContent = `Location found (±${Math.round(pos.coords.accuracy)}m) — showing nearby routes below.`;
-          },
+          onLocationSuccess,
           (err) => {
-            btn.classList.remove('loading');
-            btn.disabled = false;
-            statusEl.className = 'locate-status error';
-            if (err.code === err.PERMISSION_DENIED) {
-              statusEl.textContent = 'Location permission denied. Enable it in your browser settings to see nearby routes.';
-            } else if (err.code === err.POSITION_UNAVAILABLE) {
-              statusEl.textContent = 'Could not determine your location. Please try again.';
-            } else if (err.code === err.TIMEOUT) {
-              statusEl.textContent = 'Location request timed out. Please try again.';
+            
+            if (err.code === err.TIMEOUT || err.code === err.POSITION_UNAVAILABLE) {
+              statusEl.textContent = 'Still trying — retrying with a wider search…';
+              navigator.geolocation.getCurrentPosition(
+                onLocationSuccess,
+                onLocationError,
+                { enableHighAccuracy: false, timeout: 15000, maximumAge: 300000 }
+              );
             } else {
-              statusEl.textContent = 'Something went wrong getting your location.';
+              onLocationError(err);
             }
           },
-          { enableHighAccuracy: true, timeout: 12000, maximumAge: 60000 }
+          { enableHighAccuracy: true, timeout: 8000, maximumAge: 60000 }
         );
       });
     })();
