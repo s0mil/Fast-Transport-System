@@ -1,795 +1,738 @@
-<div align="center">
+# 🚍 FAST Transport System
 
-<img src="https://img.shields.io/badge/FAST-TRANSPORT-E31E24?style=for-the-badge&logo=bus&logoColor=white" alt="FAST Transport">
+> 🔴 **A futuristic, intelligent transport assistant for FAST-NUCES Karachi students.** 🟡
 
-🚍 FAST Transport System
+<p align="center">
 
-Your FAST bus. Your route. Your time. — all in one place.
+[![Live Demo](https://img.shields.io/badge/🚀_LIVE_DEMO-FAST_TRANSPORT-E31E24?style=for-the-badge)](https://fasttransport.vercel.app/)
 
-A futuristic, intelligent transport assistant built for FAST-NUCES Karachi students.
+[![Routes](https://img.shields.io/badge/🚌_ROUTES-53+-FFD700?style=for-the-badge\&labelColor=111111)](#)
 
-<p>
-  <a href="https://fasttransport.vercel.app/">
-    <img src="https://img.shields.io/badge/🚀%20LIVE%20DEMO-OPEN%20WEBSITE-E31E24?style=for-the-badge" alt="Live Demo">
-  </a>
-  <a href="https://github.com/s0mil/Fast-Transport-System">
-    <img src="https://img.shields.io/badge/⭐%20GITHUB-VIEW%20REPO-111111?style=for-the-badge&logo=github" alt="GitHub">
-  </a>
+[![AI](https://img.shields.io/badge/🤖_AI_ASSISTANT-ENABLED-00D9FF?style=for-the-badge\&labelColor=111111)](#)
+
+[![GPS](https://img.shields.io/badge/📍_GPS-ENABLED-00C853?style=for-the-badge\&labelColor=111111)](#)
+
+[![Weather](https://img.shields.io/badge/🌤️_LIVE_WEATHER-OPEN--METEO-2196F3?style=for-the-badge)](#)
+
+[![Notifications](https://img.shields.io/badge/🔔_NOTIFICATIONS-ENABLED-9C27B0?style=for-the-badge)](#)
+
 </p>
 
-<p>
-<img src="https://img.shields.io/badge/Routes-69+-FFD700?style=flat-square&labelColor=111111">
-<img src="https://img.shields.io/badge/AI-Enabled-00D9FF?style=flat-square&labelColor=111111">
-<img src="https://img.shields.io/badge/GPS-Enabled-00C853?style=flat-square&labelColor=111111">
-<img src="https://img.shields.io/badge/Weather-Live-2196F3?style=flat-square&labelColor=111111">
-<img src="https://img.shields.io/badge/Responsive-Yes-9C27B0?style=flat-square&labelColor=111111">
-</p>
+---
 
-</div>
+## 🌈 Project Overview
 
-⚡ The Problem
+**FAST Transport System** is a modern, futuristic web application designed to make transport information easier and faster to access for **FAST-NUCES Karachi students**.
 
-Finding FAST transport shouldn't feel like this:
+Instead of manually searching through lengthy transport documents, students can instantly find:
 
-📄 Open a huge transport PDF
-        ↓
-🔍 Search through pages
-        ↓
-🚌 Find your route
-        ↓
-📍 Find your stop
-        ↓
-⏱️ Check the timing
-        ↓
-📞 Find the driver's number
+> 🚌 **Routes** · 📍 **Nearby Stops** · ⏱️ **Timings** · 📞 **Drivers** · 🤖 **AI Assistance**
 
-So I built this:
+The application combines practical transport functionality with an immersive **HUD-inspired interface**, GPS intelligence, personalization, notifications, route comparison, live weather, and voice interaction.
 
-🔎 SEARCH / 🤖 ASK AI
-          ↓
-       🚌 ROUTE
-          ↓
-   📍 STOP + ⏱️ TIME
-          ↓
-      🎯 GET TO FAST
+---
 
-FAST Transport System turns a tedious search into a few seconds.
+# 🔴🟡 Core Transport System
 
-🧠 What Makes It Different?
+The application currently contains **69 transport routes** across:
 
-This isn't just a list of bus routes.
+* 🔴 **Nadeem Transport**
+* 🟡 **Jadoon Transport**
 
-It's a complete transport dashboard with:
+Each route contains:
 
+* 🚌 Route number
+* 👨‍✈️ Driver name
+* 📞 Driver phone number
+* 📍 Complete stop list
+* ⏱️ Stop timings
+* 🏁 FAST arrival time
 
+### 🧊 Interactive Route Cards
 
-Feature
+Each route card provides:
 
-What it does
+* Expandable stop list
+* Highlighted arrival time
+* Live departure countdown
+* Driver contact
+* Google Maps navigation
+* Call Driver
+* Notify Me
+* Share Route
+* Favorite route
+* Compare route
 
-🚌
+---
 
-69+ Routes
+# 🔎 Smart Search & Filtering
 
-Nadeem + Jadoon transport
+Find transport information instantly.
 
-🤖
+### Search By
 
-AI Assistant
+* 🔢 Route number
+* 👨‍✈️ Driver name
+* 📍 Stop name
+* 🏙️ Area
 
-Ask transport questions naturally
+Search results update in real time.
 
-📍
+### 🎛️ Filters
 
-GPS Intelligence
-
-Find routes near you
-
-🗺️
-
-Google Maps
-
-Open complete route paths
-
-⏱️
-
-Live Countdown
-
-Know when your bus leaves
-
-⭐
-
-Favorites
-
-Save your everyday routes
-
-⇄
-
-Route Compare
-
-Compare up to 3 routes
-
-🔔
-
-Notifications
-
-Get departure reminders
-
-📤
-
-Quick Share
-
-Share routes instantly
-
-🎤
-
-Voice Assistant
-
-Talk to the AI
-
-🌤️
-
-Live Weather
-
-Karachi weather at a glance
-
-🌙
-
-Dark / Light
-
-Switch the entire experience
-
-🚌 Transport Network
-
-The system currently contains 69+ routes across:
-
-🔴 Nadeem Transport
-
-🟡 Jadoon Transport
-
-Each route includes:
-
-🚌 Route number
-
-👨‍✈️ Driver name
-
-📞 Driver phone
-
-📍 Complete stop list
-
-⏱️ Stop timings
-
-🏁 FAST arrival time
-
-🧊 Interactive Route Cards
-
-Every route becomes an interactive control panel:
-
-┌──────────────────────────────────────────────┐
-│ 🚌 ROUTE 28                    🔴 LIVE       │
-│ Driver: Muhammad ______                     │
-│                                              │
-│ 📍 Stop 1  →  Stop 2  →  Stop 3  → FAST     │
-│                                              │
-│ ⏱️ Departs in 42 min                        │
-│                                              │
-│ 📞 CALL   🗺️ MAPS   🔔 NOTIFY   📤 SHARE    │
-│ ⭐ SAVE   ⇄ COMPARE                          │
-└──────────────────────────────────────────────┘
-
-🔎 Search Like You Mean It
-
-Search by:
-
-🔢 Route Number
-👨‍✈️ Driver Name
-📍 Stop Name
-🏙️ Area
-
-Results update instantly.
-
-🎛️ Smart Filters
-
-All Routes · Nadeem · Jadoon · Nearest · Favorites · Compare
-
-⌨️ Keyboard shortcuts
-
-Key
-
-Action
-
-/
-
-Focus search
-
-Esc
-
-Clear search
-
-🤖 AI Route Assistant
-
-Stop searching. Just ask.
-
-The AI Route Assistant lets students interact with the transport system naturally.
-
-💬 "Which route goes through Malir?"
-
-💬 "What's the phone number for Route 12?"
-
-💬 "What time does Route 5 depart?"
-
-💬 "Show me the stops for Route 28."
-
-💬 "What's the nearest stop to me?"
-
-💬 "What's the next bus?"
-
-💬 "Mausam kaisa hai?"
-
-🧠 It understands
-
-Route lookups
-
-Driver phone numbers
-
-Stop lists
-
-Route timings
-
-Nearest-stop queries
-
-Area-based searches
-
-Next-bus queries
-
-Live weather
-
-General transport assistance
-
-🔎 Fuzzy Driver Search
-
-Even minor spelling mistakes can still match available drivers.
-
-⚡ AI Actions
-
-AI responses can turn into actions:
-
-📋 Copy Phone · 📞 Call Driver · 🚌 Open Route · 📍 Find Route
-
-💡 Quick Replies
-
-Suggested questions make common actions one tap away.
-
-📍 GPS-Powered Nearby Routes
-
-Tap Use My Location and the system can find transport options around you.
-
-You can see:
-
-📍 Nearest routes
-
-📏 Distance from pickup points
-
-🚶 Walking estimates
-
-🚗 Driving estimates
-
-🚌 Nearby transport
-
-🔢 Distance-ranked routes
-
-The project includes approximate coordinate mapping for around 80 Karachi areas, with per-stop coordinates for distance calculations.
-
-🗺️ Google Maps Integration
-
-Every route can be opened in Google Maps.
-
-The generated route can connect:
-
-📍 PICKUP
-    ↓
-📍 STOP
-    ↓
-📍 STOP
-    ↓
-📍 WAYPOINT
-    ↓
-🏫 FAST
-
-One tap. Full route.
-
-⏱️ Live Departure Countdown
-
-No more guessing.
-
-┌─────────────────────────┐
-│ 🚌 DEPARTURE            │
-│                         │
-│      2h 15m             │
-│                         │
-│ 🟢 UPCOMING             │
-└─────────────────────────┘
-
-Countdowns refresh automatically every 20 seconds.
-
-🚦 Urgency states
-
-🟢 Upcoming → 🟡 Departing Soon → 🟠 Very Soon → 🔴 Departure Alert
-
-⭐ Personal Transport Dashboard
-
+```text
+🔴 All Routes
+🚌 Nadeem Routes
+🟡 Jadoon Routes
+📍 Sort by Distance
 ⭐ Favorites
+⇄ Compare
+```
 
-Save routes you use regularly.
+### ⌨️ Keyboard Shortcuts
 
-📌 My Route
+| Shortcut | Action       |
+| -------- | ------------ |
+| `/`      | Focus search |
+| `Esc`    | Clear search |
 
-Pin your primary route:
+---
 
+# 📍 GPS & Location Intelligence
+
+The **Use My Location** feature uses browser geolocation to identify nearby transport routes.
+
+After sharing their location, users can see:
+
+* 📍 Nearest routes
+* 📏 Distance from pickup points
+* 🚶 Walking estimates
+* 🚗 Driving estimates
+* 🚌 Nearby transport options
+* 🔢 Routes ranked by distance
+
+### 🗺️ Nearby Routes
+
+A dedicated **Routes Near You** section displays nearby routes with:
+
+* Distance badges
+* Quick-jump buttons
+* Route information
+* Distance-based sorting
+
+The application includes approximate coordinate mapping for approximately **80 Karachi areas**, combined with jittered per-stop coordinates for realistic distance calculations.
+
+---
+
+# 🗺️ Google Maps Integration
+
+Every route includes an **Open in Google Maps** button.
+
+The application automatically generates a multi-stop driving route using:
+
+* Starting pickup point
+* Route stops
+* Waypoints
+* Destination
+
+This makes it easier for students to understand the actual route path.
+
+---
+
+# ⏱️ Live Departure Countdown
+
+Every route card displays a live departure countdown.
+
+Example:
+
+```text
+🚌 DEPARTS IN 2h 15m
+```
+
+Countdowns automatically refresh every **20 seconds**.
+
+### 🚦 Visual Urgency States
+
+🟢 **Upcoming**
+
+🟡 **Departing Soon**
+
+🟠 **Very Soon**
+
+🔴 **Departure Alert**
+
+---
+
+# ⭐ Personalization
+
+The application remembers user preferences through browser `localStorage`.
+
+## ⭐ Favorites
+
+Star frequently used routes and access them through the dedicated **Favorites** section.
+
+## 📌 My Route
+
+Pin your most frequently used route.
+
+A sticky banner displays:
+
+```text
 📌 MY ROUTE
+Next Departure: 6:45 AM
+```
 
-Next Departure
-06:45 AM
+## 🕒 Recently Viewed
 
-🕒 Recently Viewed
+Automatically tracks the user's **last 6 viewed routes**.
 
-The last 6 viewed routes are remembered.
+## 💾 Persistent Data
 
-💾 Persistent Preferences
+The following information persists between sessions:
 
-Stored locally:
+* Favorites
+* Pinned route
+* Recently viewed routes
+* Theme preference
 
-Favorites
+---
 
-Pinned route
+# 🔔 Notifications
 
-Recently viewed routes
+## Notify Me
 
-Theme preference
+Users can enable a browser notification for a route departure.
 
-🔔 Never Miss Your Bus
+The system is designed to notify users approximately:
 
-Enable Notify Me for a route.
+> 🟣 **10 minutes before departure**
 
-The system is designed to send a browser notification approximately:
+This eliminates the need to repeatedly check route timings.
 
-🟣 10 MINUTES BEFORE DEPARTURE
+---
 
-Less checking. More confidence.
+# 📤 Route Sharing
 
-⇄ Compare Routes
+Share complete route information directly from any route card.
 
-Can't decide between routes?
+### Available Sharing Methods
 
-Select up to 3 routes and compare them side-by-side.
+🟢 **WhatsApp**
 
-Information
+📱 **Native Share Sheet**
 
-Route A
+📋 **Copy to Clipboard**
 
-Route B
+Shared information can include:
 
-Route C
+* Route number
+* Driver
+* Phone number
+* Stops
+* Timings
+* Arrival information
 
-🚌 Route
+---
 
-✅
+# ⇄ Route Comparison
 
-✅
+Compare up to **3 routes simultaneously**.
 
-✅
+### Comparison Includes
 
-👨‍✈️ Driver
+| Information        | Available |
+| ------------------ | :-------: |
+| 🚌 Route Number    |     ✅     |
+| 👨‍✈️ Driver       |     ✅     |
+| 📞 Phone           |     ✅     |
+| 📍 Stop Count      |     ✅     |
+| 🟢 First Stop      |     ✅     |
+| 🔴 Last Stop       |     ✅     |
+| 🗺️ Full Stop List |     ✅     |
 
-✅
+A floating comparison bar displays the current selection count.
 
-✅
+---
 
-✅
+# 📞 Quick Actions
 
-📞 Phone
+Every route card provides instant actions.
 
-✅
+### 📞 Call Driver
 
-✅
+Uses the device's `tel:` functionality to contact the driver.
 
-✅
+### 🔔 Notify Me
 
-📍 Stop Count
+Creates a departure reminder.
 
-✅
+### 📤 Share
 
-✅
+Shares complete route information.
 
-✅
+### 🗺️ Google Maps
 
-🟢 First Stop
+Opens the route in Google Maps with multiple stops and waypoints.
 
-✅
+---
 
-✅
+# 🤖 AI Route Assistant
 
-✅
+The **AI Route Assistant** is one of the main features of the project.
 
-🔴 Last Stop
+Students can ask questions naturally instead of manually searching through route cards.
 
-✅
+### 💬 Example Questions
 
-✅
+```text
+Which route goes through Malir?
 
-✅
+What's the phone number for Route 12?
 
-🗺️ Full Stops
+What time does Route 5 depart?
 
-✅
+Show me the stops for Route 28.
 
-✅
+What's the nearest stop to me?
 
-✅
+What's the nearest stop to Gulshan?
 
-📤 Share Routes Instantly
+What's the next bus?
 
-Share complete route information through:
+Mausam kaisa hai?
+```
 
-🟢 WhatsApp
+The assistant supports:
 
-📱 Native Share Sheet
+* 🇬🇧 English
+* 🇵🇰 Urdu-mix queries
 
-📋 Clipboard
+---
 
-A shared route can contain:
+## 🧠 AI Capabilities
 
-Route · Driver · Phone · Stops · Timings · Arrival
+The assistant understands:
 
-🎤 Voice Mode
+* 🚌 Route lookups
+* 📞 Driver phone numbers
+* 📍 Stop lists
+* ⏱️ Route timings
+* 📌 Nearest stop queries
+* 🏙️ Area-based route searches
+* 🚌 Next bus queries
+* 🌤️ Live weather
+* 💬 General transport assistance
 
-Don't want to type?
+---
 
-🎤 Voice Input
+## 🔎 Fuzzy Driver Matching
 
-Speak your question and convert speech to text.
+Minor spelling mistakes in driver names can still be matched against available drivers.
 
-🔊 Voice Replies
+This makes driver searches more forgiving.
 
-Let the assistant read the answer aloud.
+---
 
-Both can be toggled on/off.
+## ⚡ Inline AI Actions
 
-🌤️ Live Karachi Weather
+AI responses can provide contextual actions such as:
 
-Powered by Open-Meteo API.
+* 📋 Copy phone
+* 📞 Call driver
+* 🚌 Jump to route
+* 📍 Find route
 
-Weather appears directly in the dashboard and can also be requested through the AI assistant.
+---
 
-🛡️ Reliability
+## 💡 Quick Reply Chips
+
+The chat interface provides suggested questions for common transport actions.
+
+Users can tap a suggestion instead of typing manually.
+
+---
+
+# 🎤 Voice Assistant
+
+The AI Route Assistant also supports voice interaction.
+
+### 🎤 Voice Input
+
+Use the microphone to convert speech into text.
+
+### 🔊 Voice Replies
+
+The assistant can read responses aloud using text-to-speech.
+
+Both features are toggleable.
+
+---
+
+# 🌤️ Live Weather
+
+The application displays real-time **Karachi weather** using the **Open-Meteo API**.
+
+Weather information is available:
+
+* 🌤️ In the hero statistics card
+* 🤖 Through the AI Assistant
+
+### 🛡️ Reliability
+
+The weather system includes:
+
+* Retry handling
+* Request timeout
+* Stale-cache fallback
+
+This helps prevent temporary API problems from disrupting the experience.
+
+---
+
+# 🎨 Futuristic UI
+
+The interface uses a colorful **transport HUD / futuristic dashboard aesthetic**.
+
+### 🎨 Main Accent Palette
+
+| Color     | Purpose                            |
+| --------- | ---------------------------------- |
+| 🔴 Red    | Primary transport actions          |
+| 🟡 Gold   | Highlights & important information |
+| 🔵 Cyan   | AI & futuristic elements           |
+| 🔵 Blue   | GPS & weather                      |
+| 🟣 Purple | Notifications & personalization    |
+| 🟢 Green  | Live / active states               |
+| 🟠 Orange | Warnings & urgency                 |
+| ⚫ Dark    | HUD / futuristic foundation        |
+
+---
+
+# 🌙 Dark & Light Themes
 
 Includes:
 
-Retry handling
+* 🌑 Dark Mode
+* ☀️ Light Mode
+* Animated theme toggle
+* Persistent preference
+* Full color-scheme adaptation
 
-Request timeout
+Theme preference is saved using `localStorage`.
 
-Stale-cache fallback
+---
 
-🎨 The UI
+# 🚪 Animated Boot Sequence
 
-The project intentionally uses a futuristic transport HUD aesthetic instead of a generic dashboard.
+The website opens with a cinematic transport-inspired boot sequence featuring:
 
-🎨 Visual language
+* 🚪 Sliding metal doors
+* 🖥️ HUD status text
+* 📊 Animated progress bar
+* 🚌 Driving bus icon
+* 🔘 Node-by-node loading indicators
+* 🔊 Synchronized sound effects
+* 🎵 Optional background music
 
-🔴 RED       → Transport actions
-🟡 GOLD      → Highlights
-🔵 CYAN      → AI / Futuristic
-🔵 BLUE      → GPS / Weather
-🟣 PURPLE    → Notifications
-🟢 GREEN     → Live states
-🟠 ORANGE    → Warnings
-⚫ DARK      → HUD foundation
+### 🔊 Audio Policy
 
-🌙 Dark + Light Mode
+Background music **never autoplays**.
 
-Two complete visual modes:
+The user must explicitly tap to enable it.
 
-🌑 DARK
+---
 
-Cyberpunk / HUD-inspired experience.
+# ✨ Particle Network Background
 
-☀️ LIGHT
+An animated HTML Canvas particle network creates a dynamic background.
 
-Clean, bright alternative.
+The system reacts to the selected theme.
 
-Includes:
+---
 
-Animated theme transition
+# 🖱️ Custom Cursor
 
-Persistent preference
+Desktop users get a custom cursor system featuring:
 
-Full color adaptation
+* Dot cursor
+* Trailing ring
+* Hover states
+* Cursor-following glow
+* Interactive reactions
 
-🎬 Cinematic Experience
+---
 
-The interface isn't static.
+# 🧊 3D Route Cards
 
-🚪 Boot Sequence
+Route cards provide an interactive 3D HUD experience.
 
-On launch:
+### Effects
 
-🚪 SYSTEM INITIALIZING
-        ↓
-🚌 TRANSPORT CORE
-        ↓
-📡 GPS SYSTEM
-        ↓
-🤖 AI SYSTEM
-        ↓
-🟢 SYSTEM ONLINE
+* 3D tilt-on-hover
+* Neon glow borders
+* HUD corner brackets
+* Scanning bus animation
+* Dynamic glow effects
 
-Features include:
+---
 
-Sliding metal doors
+# 🚌 Animated Hero Section
 
-HUD status text
+The hero section includes:
 
-Animated progress bar
+* Mouse-based 3D tilt
+* Scroll-based parallax
+* Scale/fade transitions
+* Animated bus
+* Dashed road lane
+* 🔴 **LIVE ROUTE TRACKING** badge
+* Pulsing live indicator
 
-Bus animation
+---
 
-Loading nodes
+# 🎬 Scroll & Navigation Effects
 
-Synchronized effects
+The application includes:
 
-Optional background music
+* Scroll-reveal route cards
+* Header shrink-on-scroll
+* Header sheen animation
+* Smooth transitions
+* Hover animations
+* Interactive feedback
 
-🔊 Background music never autoplays.
+---
 
-✨ Micro-Interactions
+# 🔊 Sound & Tactile Interaction
 
-🕸️ Particle Network
+Buttons and links use synthesized **Web Audio API** effects.
 
-Animated Canvas background.
+No external sound files are required for button interaction sounds.
 
-🖱️ Custom Cursor
+Buttons also feature:
 
-Dot + trailing ring + glow + hover reactions.
-
-🧊 3D Route Cards
-
-Tilt on hover
-
-Neon borders
-
-HUD brackets
-
-Scanning bus animation
-
-Dynamic glow
-
-🚌 Hero Animation
-
-Mouse-based 3D tilt
-
-Scroll parallax
-
-Animated bus
-
-Dashed road
-
-Live tracking indicator
-
-🎬 Scroll Effects
-
-Reveal animations
-
-Header shrink
-
-Header sheen
-
-Smooth transitions
-
-Hover feedback
-
-🔊 Sound Design
-
-Button interactions use synthesized Web Audio API effects.
-
-No external sound files are required.
-
+```text
 PRESS
   ↓
 FEEDBACK
   ↓
 RELEASE
+```
 
-Small details, but they make the interface feel alive.
+creating a tactile interface experience.
 
-📊 Live Dashboard
+---
 
-Animated statistics display:
+# 📊 Live Statistics
 
-🚌 ROUTES
-👨‍✈️ DRIVERS
-📍 STOPS
-⏱️ ARRIVAL DATA
+The dashboard includes animated count-up statistics for:
 
-Also includes a live digital clock.
+* 🚌 Total routes
+* 👨‍✈️ Total drivers
+* 📍 Unique stops
+* ⏱️ Arrival information
 
-📱 Fully Responsive
+---
 
-Designed for:
+# 🕐 Live Clock
 
-🖥️ Desktop · 💻 Laptop · 📲 Tablet · 📱 Mobile
+A live digital clock is displayed in the header and updates dynamically.
+
+---
+
+# 📱 Responsive Design
+
+The interface is optimized for:
+
+* 🖥️ Desktop
+* 💻 Laptop
+* 📲 Tablet
+* 📱 Mobile
 
 The navigation, route cards, filters, comparison system, and AI assistant adapt to smaller screens.
 
-🛠️ Built With
+---
 
-<div align="center">
+# 🛠️ Tech Stack
 
-Layer
+## 🎨 Frontend
 
-Technology
+* HTML5
+* CSS3
+* Vanilla JavaScript
 
-🎨 Frontend
+## 🌐 Browser APIs
 
-HTML5 · CSS3 · Vanilla JavaScript
+* Geolocation API
+* Web Notifications API
+* Web Share API
+* Clipboard API
+* Web Speech API
+* Web Audio API
+* HTML5 Canvas
+* LocalStorage
 
-📍 Location
+## 🌤️ External APIs
 
-Geolocation API
+* Open-Meteo API
 
-🔔 Notifications
+## 🗺️ Maps
 
-Web Notifications API
+* Google Maps URL integration
 
-📤 Sharing
+## 🚀 Deployment
 
-Web Share API
+* Vercel
 
-📋 Clipboard
+---
 
-Clipboard API
+# 📂 Project Structure
 
-🎤 Voice
-
-Web Speech API
-
-🔊 Audio
-
-Web Audio API
-
-🖼️ Graphics
-
-HTML5 Canvas
-
-💾 Storage
-
-LocalStorage
-
-🌤️ Weather
-
-Open-Meteo API
-
-🗺️ Maps
-
-Google Maps URL Integration
-
-🚀 Hosting
-
-Vercel
-
-</div>
-
-📂 Project Structure
-
+```text
 FAST-Transport-System/
 │
-├── 📄 index.html
-├── 📄 README.md
-├── 📁 assets/
-└── 📁 screenshots/
+├── index.html
+├── README.md
+│
+├── assets/
+│
+└── screenshots/
+```
 
-The exact structure may vary depending on the current project version.
+> The exact structure may vary depending on the current project version.
 
-🚀 Run Locally
+---
 
-01 — Clone
+# 🚀 Installation
 
+### 1️⃣ Clone the Repository
+
+```bash
 git clone https://github.com/s0mil/Fast-Transport-System.git
+```
 
-02 — Enter
+### 2️⃣ Enter the Project
 
+```bash
 cd Fast-Transport-System
+```
 
-03 — Launch
+### 3️⃣ Run the Website
 
-Open index.html in your browser.
+Open:
 
-For development, VS Code Live Server is recommended.
+```text
+index.html
+```
 
-🌐 Try It
+in your browser.
 
-<div align="center">
+For development, **VS Code Live Server** is recommended.
 
-🚀 FAST TRANSPORT SYSTEM
+---
 
-Find Your Route. Catch Your Bus. Get to FAST.
+# 🌐 Live Deployment
 
-</div>
+<p align="center">
 
-🎯 Project Goal
+### 🚀 FAST TRANSPORT SYSTEM
 
-FAST students shouldn't need to dig through long transport documents just to answer:
+**https://fasttransport.vercel.app/**
 
-Which bus goes through my area?
-Where is my nearest pickup point?
-What time does my bus leave?
-What's my driver's number?
-
-FAST Transport System was built to answer those questions quickly, visually, and intelligently.
-
-🔮 Roadmap
-
-Ideas for future versions:
-
-🛰️ Real-time GPS bus tracking
-
-📍 Live bus locations
-
-👤 Student accounts
-
-🛠️ Admin dashboard
-
-📲 Progressive Web App
-
-🔔 Advanced personalized notifications
-
-🚌 Live bus occupancy
-
-📈 Transport analytics
-
-☁️ Cloud-based route management
-
-🔄 Automatic route updates
-
-🏫 Multi-campus support
-
-👨‍💻 Developer
-
-<div align="center">
-
-Somil
-
-Computer Science Student — FAST-NUCES Karachi
-
-Built to make everyday transport information easier and faster for fellow FASTians.
-
-<p>
-  <a href="https://github.com/s0mil">
-    <img src="https://img.shields.io/badge/GitHub-s0mil-111111?style=for-the-badge&logo=github" alt="GitHub">
-  </a>
-  <a href="https://www.linkedin.com/in/s0mil/">
-    <img src="https://img.shields.io/badge/LinkedIn-Somil-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn">
-  </a>
 </p>
 
-</div>
+---
+
+# 🎯 Project Goal
+
+Students often have to search through lengthy transport documents just to answer simple questions:
+
+> 🚌 Which bus goes through my area?
+
+> 📍 Where is my nearest pickup point?
+
+> ⏱️ What time does my bus leave?
+
+> 📞 What's my driver's number?
+
+FAST Transport System turns that process into a few seconds.
+
+### 📄 Traditional Method
+
+```text
+📄 PDF
+   ↓
+🔍 Search
+   ↓
+🚌 Find Route
+   ↓
+📍 Find Stop
+   ↓
+⏱️ Check Timing
+```
+
+### 🚍 FAST Transport System
+
+```text
+🔍 Search / 🤖 Ask AI
+          ↓
+       🚌 Route
+          ↓
+   📍 Stop + ⏱️ Time
+```
+
+---
+
+# 🔮 Future Possibilities
+
+Potential future improvements include:
+
+* 🛰️ Real-time GPS bus tracking
+* 📍 Live bus locations
+* 👤 Student accounts
+* 🛠️ Admin dashboard
+* 📲 Progressive Web App
+* 🔔 Advanced personalized notifications
+* 🚌 Live bus occupancy
+* 📈 Transport analytics
+* ☁️ Cloud-based route management
+* 🔄 Automatic route updates
+* 🏫 Multi-campus support
+
+---
+
+# 👨‍💻 Developer
+
+## Somil
+
+**Computer Science Student — FAST-NUCES Karachi**
+
+Built to make daily transport information easier and faster for fellow FASTians.
+
+### 🐙 GitHub
+
+**https://github.com/s0mil**
+
+### 💼 LinkedIn
+
+**https://www.linkedin.com/in/s0mil/**
+
+---
+
+# ⭐ Support the Project
+
+If you find **FAST Transport System** useful, consider giving the repository a ⭐.
+
+Every star helps support the project and motivates further development.
+
+---
 
 <div align="center">
 
-⭐ Like the project?
+# 🔴🟡🔵🟣🟢 FAST TRANSPORT SYSTEM 🚌
 
-Give the repository a ⭐
+### **Find Your Route. Catch Your Bus. Get to FAST.**
 
-It helps the project grow and motivates future updates.
-
-<br>
-
-🔴 🟡 🔵 🟣 🟢
-
-🚍 FAST TRANSPORT SYSTEM
-
-Find Your Route. Catch Your Bus. Get to FAST.
-
-Made with ❤️ by Somil
+**Made with ❤️ by Somil**
 
 </div>
